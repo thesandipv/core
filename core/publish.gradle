@@ -14,9 +14,9 @@
  */
 
 apply plugin: 'com.jfrog.bintray'
-apply plugin: 'maven-publish'
 
 group 'com.afterroot.core'
+version "${myVersion}"
 
 project.ext {
     mavGitUrl = 'https://github.com/sandipv22/Core.git'
@@ -30,36 +30,10 @@ project.ext {
 def properties = new Properties()
 properties.load(new FileInputStream("local.properties"))
 
-publishing {
-    publications {
-        Production(MavenPublication) {
-            artifact("$buildDir/outputs/aar/core-release.aar")
-            groupId
-            artifactId 'core'
-            version "${version}"
-
-            pom.withXml {
-                def dependenciesNode = asNode().getAt('dependencies')[0] ?: asNode().appendNode('dependencies')
-
-                // Iterate over the implementation dependencies (we don't want the test ones), adding a <dependency> node for each
-                configurations.implementation.allDependencies.each {
-                    // Ensure dependencies such as fileTree are not included.
-                    if (it.name != 'unspecified') {
-                        def dependencyNode = dependenciesNode.appendNode('dependency')
-                        dependencyNode.appendNode('groupId', it.group)
-                        dependencyNode.appendNode('artifactId', it.name)
-                        dependencyNode.appendNode('version', it.version)
-                    }
-                }
-            }
-        }
-    }
-}
-
 bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
-    publications = ['Production']
+    publications = ['mavenPublish']
     configurations = ['archives']
     override = true
     pkg {

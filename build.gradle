@@ -26,7 +26,7 @@ ext {
     major = 0
     minor = 1
     patch = 0
-    version = "${major}.${minor}.${patch}"
+    myVersion = "${major}.${minor}.${patch}"
 }
 
 buildscript {
@@ -34,13 +34,12 @@ buildscript {
     repositories {
         google()
         jcenter()
-        
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
     }
 }
 

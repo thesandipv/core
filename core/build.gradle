@@ -16,7 +16,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply from: 'publish.gradle'
+
 android {
     compileSdkVersion 29
     buildToolsVersion '29.0.3'
@@ -49,3 +49,4 @@ dependencies {
     implementation "com.afollestad.material-dialogs:core:${materialDialogsVersion}"
     implementation "com.google.android.material:material:${googleMaterialVersion}"
 }
+apply from: 'publish.gradle'
