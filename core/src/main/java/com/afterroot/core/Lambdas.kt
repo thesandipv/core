@@ -13,5 +13,26 @@
  *  limitations under the License.
  */
 
-rootProject.name='Core'
-include ':core'
+package com.afterroot.core
+
+import android.os.Build
+
+fun onVersionGreaterThanEqualTo(targetVersion: Int, trueFun: () -> Unit, falseFun: (() -> Unit)? = null) {
+    if (Build.VERSION.SDK_INT >= targetVersion) {
+        trueFun()
+    } else {
+        if (falseFun != null) {
+            falseFun()
+        }
+    }
+}
+
+fun onVersionLessThan(targetVersion: Int, trueFun: () -> Unit, falseFun: (() -> Unit)? = null) {
+    if (Build.VERSION.SDK_INT < targetVersion) {
+        trueFun()
+    } else {
+        if (falseFun != null) {
+            falseFun()
+        }
+    }
+}

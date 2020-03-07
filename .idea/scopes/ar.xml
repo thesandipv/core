@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="ar" pattern="src[core]:com.afterroot.core.*||src[core]:layout.*" />
+</component>

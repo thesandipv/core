@@ -13,5 +13,18 @@
  *  limitations under the License.
  */
 
-rootProject.name='Core'
-include ':core'
+package fr.dasilvacampos.network.monitoring
+
+import androidx.lifecycle.LiveData
+
+/**
+ * This liveData enabling network connectivity monitoring
+ * @see NetworkStateHolder to get current connection state
+ */
+object NetworkEvents : LiveData<Event>() {
+
+    internal fun notify(event: Event) {
+        postValue(event)
+    }
+
+}
