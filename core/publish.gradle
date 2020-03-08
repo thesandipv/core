@@ -22,7 +22,7 @@ project.ext {
     mavGitUrl = 'https://github.com/sandipv22/Core.git'
     mavLibraryDescription = "Core Package for AfterROOT Apps"
     mavLibraryLicenses = ["Apache-2.0": 'http://www.apache.org/licenses/LICENSE-2.0.txt']
-    mavProjectName = 'Core'
+    mavProjectName = 'core'
     mavPublishToMavenLocal = true
     mavSiteUrl = 'https://afterroot.web.app'
 }
@@ -38,7 +38,7 @@ bintray {
     override = true
     pkg {
         repo = 'afterroot'
-        name = 'Core'
+        name = 'core'
         description = "Core Package for AfterROOT Apps"
         publicDownloadNumbers = true
         licenses = ['Apache-2.0']

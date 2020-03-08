@@ -26,15 +26,18 @@ android {
         targetSdkVersion 29
         versionCode minimumSdkVersion * 10000000 + major * 10000 + minor * 100 + patch
         versionName "${major}.${minor}.${patch}"
-
-        consumerProguardFiles 'consumer-rules.pro'
     }
 
     buildTypes {
         release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
 }
 
