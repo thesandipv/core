@@ -37,17 +37,17 @@ bintray {
     configurations = ['archives']
     override = true
     pkg {
-        repo = 'maven'
+        repo = 'afterroot'
         name = 'Core'
         description = "Core Package for AfterROOT Apps"
         publicDownloadNumbers = true
         licenses = ['Apache-2.0']
         vcsUrl = 'https://github.com/sandipv22/Core.git'
         version {
-            name = "${version}"
-            desc = "Version ${version}"
+            name = "${myVersion}"
+            desc = "Version ${myVersion}"
             released = new Date()
-            vcsTag = "${version}"
+            vcsTag = "${myVersion}"
         }
     }
 }
