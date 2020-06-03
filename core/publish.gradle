@@ -19,7 +19,7 @@ group 'com.afterroot.core'
 version "${myVersion}"
 
 project.ext {
-    mavGitUrl = 'https://github.com/sandipv22/Core.git'
+    mavGitUrl = 'https://github.com/thesandipv/Core.git'
     mavLibraryDescription = "Core Package for AfterROOT Apps"
     mavLibraryLicenses = ["Apache-2.0": 'http://www.apache.org/licenses/LICENSE-2.0.txt']
     mavProjectName = 'core'
@@ -38,11 +38,13 @@ bintray {
     override = true
     pkg {
         repo = 'afterroot'
-        name = 'core'
-        description = "Core Package for AfterROOT Apps"
+        name = project.ext.mavProjectName
+        description = project.ext.mavLibraryDescription
         publicDownloadNumbers = true
-        licenses = ['Apache-2.0']
-        vcsUrl = 'https://github.com/sandipv22/Core.git'
+        licenses = project.ext.mavLibraryLicenses
+        vcsUrl = project.ext.mavGitUrl
+        mavSiteUrl = project.ext.mavSiteUrl
+
         version {
             name = "${myVersion}"
             desc = "Version ${myVersion}"

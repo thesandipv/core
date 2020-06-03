@@ -34,6 +34,7 @@ import android.view.animation.Interpolator
 import android.webkit.MimeTypeMap
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.preference.PreferenceManager
@@ -47,25 +48,35 @@ import com.afterroot.core.R
 import kotlinx.android.synthetic.main.dialog_progress.view.*
 
 /**
- * sets visibility of view with optional transition
- * last updated - 03-09-2019
+ * Sets visibility of view with optional [transition]
+ * @param value view should visible or not
+ * @param transition [Transition] apply to view while changing visibility
+ * @param viewGroup [View] of which visibility will change
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
+ * @since v0.1.0
  */
 fun View.visible(
     value: Boolean,
     transition: Transition? = Fade(if (value) Fade.MODE_IN else Fade.MODE_OUT),
-    view: ViewGroup = parent as ViewGroup
+    viewGroup: ViewGroup = parent as ViewGroup
 ) {
     if (transition != null) {
-        TransitionManager.beginDelayedTransition(view, transition)
+        TransitionManager.beginDelayedTransition(viewGroup, transition)
     }
     visibility = if (value) View.VISIBLE else View.GONE
 }
 
 /**
- * animate property of view
- * last updated - 04-09-2019
+ * animate property of Any Object
+ * @param property [Float] property to animate
+ * @param from start of [property]
+ * @param to end of [property]
+ * @param duration duration of animation
+ * @param interpolator [Interpolator] to use for animation
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
+ * @since v0.1.0
  */
-fun View.animateProperty(
+fun Any.animateProperty(
     property: String,
     from: Float,
     to: Float,
@@ -79,6 +90,32 @@ fun View.animateProperty(
     }
 }
 
+/**
+ * Extension function for animating progress of [DrawerArrowDrawable]
+ * @param from start progress
+ * @param to end progress
+ * @param duration duration of animation
+ * @param interpolator [Interpolator] for Animation. Default is [AccelerateDecelerateInterpolator]
+ * @since v0.2.0
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
+ */
+fun DrawerArrowDrawable.progress(
+    from: Float,
+    to: Float,
+    duration: Long = 400,
+    interpolator: Interpolator = AccelerateDecelerateInterpolator()
+) {
+    animateProperty("progress", from, to, duration, interpolator)
+}
+
+/**
+ * Helper function for checking app is installed or not
+ * @param pName package name of target
+ * @throws [PackageManager.NameNotFoundException] throws if package not found - no need to handle exception
+ * @since v0.1.0
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
+ * @return true if package installed otherwise false
+ */
 fun Context.isAppInstalled(pName: String): Boolean {
     return try {
         this.packageManager.getApplicationInfo(pName, 0)
@@ -88,18 +125,34 @@ fun Context.isAppInstalled(pName: String): Boolean {
     }
 }
 
+/**
+ * Helper function for checking internet connection availability. May not work on API 29 or higher
+ * @since v0.1.0
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
+ * @return true if connection available otherwise false
+ */
 fun Context.isNetworkAvailable(): Boolean { //TODO compatibility with android 10
     val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     return cm.activeNetworkInfo?.isConnectedOrConnecting == true
 }
 
+/**
+ * Get default [SharedPreferences] instance
+ * @since v0.1.0
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
+ * @return [SharedPreferences] instance
+ */
 fun Context.getPrefs(): SharedPreferences {
     return PreferenceManager.getDefaultSharedPreferences(this)
 }
 
 /**
- * returns drawable with optional tint
- * last updated - 31-08-2019
+ * Helper function for get drawable using Compat Method
+ * @param id Resource id of [Drawable]
+ * @param tint tint to apply
+ * @since v0.1.0
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
+ * @return [Drawable] with optional tint
  */
 fun Context.getDrawableExt(@DrawableRes id: Int, @ColorRes tint: Int? = null): Drawable? {
     var drawable: Drawable? = null
@@ -115,8 +168,11 @@ fun Context.getDrawableExt(@DrawableRes id: Int, @ColorRes tint: Int? = null): D
 }
 
 /**
- * @fileName fileName name of file
- * @return extension of fileName
+ * Helper function for requiring extension of file
+ * @param fileName fileName name of file
+ * @return extension of [fileName]
+ * @since v0.1.0
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
  */
 fun getFileExt(fileName: String): String {
     return fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length)
@@ -125,6 +181,8 @@ fun getFileExt(fileName: String): String {
 /**
  * @fileName fileName name of file
  * @return mime type of fileName
+ * @since v0.1.0
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
  */
 fun getMimeType(fileName: String): String? {
     var type: String? = null
@@ -137,38 +195,72 @@ fun getMimeType(fileName: String): String? {
     return type
 }
 
+/**
+ * [Intent] Helper for [Intent.ACTION_VIEW]
+ * @param context Context
+ * @param filename filename with extension
+ * @param uri Data
+ * @since v0.1.0
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
+ */
 fun openFile(context: Context, filename: String, uri: Uri) {
-    val intent = Intent(Intent.ACTION_VIEW)
-    intent.setDataAndType(uri, getMimeType(filename))
-    context.startActivity(intent)
+    context.startActivity(Intent(Intent.ACTION_VIEW).setDataAndType(uri, getMimeType(filename)))
 }
 
 /**
- * Extension Function for Inflating Layout to ViewGroup
+ * Extension Function for Inflating Layout to [ViewGroup]
+ * @param layoutId Resource id of layout to inflate
+ * @param attachToRoot Whether the inflated hierarchy should be attached to the root parameter?
+ * If false, root is only used to create the correct subclass of
+ * LayoutParams for the root view in the XML.
+ * @since v0.1.0
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
  */
 fun ViewGroup.inflate(layoutId: Int, attachToRoot: Boolean = false): View =
     LayoutInflater.from(context).inflate(layoutId, this, attachToRoot)
 
-fun loadBitmapFromView(view: View): Bitmap? {
-    if (view.width == 0 || view.height == 0) {
+/**
+ * Get given view as [Bitmap] image
+ * @return [Bitmap] image of view
+ * @since v0.2.0
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
+ */
+fun View.getAsBitmap(): Bitmap? {
+    if (width == 0 || height == 0) {
         return null
     }
-    val b = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+    val b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
     val c = Canvas(b)
-    view.run {
-        layout(view.left, view.top, view.right, view.bottom)
+    run {
+        layout(left, top, right, bottom)
         draw(c)
     }
     return b
 }
 
+/**
+ * Shows indeterminate progress dialog
+ * @param progressText text to show in Dialog
+ * @return [MaterialDialog] with progress layout
+ * @since v0.1.0
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
+ */
 fun Context.showStaticProgressDialog(progressText: String): MaterialDialog {
     val dialog = MaterialDialog(this).show {
         customView(R.layout.dialog_progress)
         cornerRadius(16f)
         cancelable(false)
     }
-    val customView = dialog.getCustomView()
-    customView.text_progress.text = progressText
+    dialog.updateProgressText(progressText)
     return dialog
+}
+
+/**
+ * Update progress of dialog shown by [showStaticProgressDialog]
+ * @param progressText text to show in Dialog
+ * @since v0.2.0
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
+ */
+fun MaterialDialog.updateProgressText(progressText: String) {
+    getCustomView().text_progress.text = progressText
 }
