@@ -13,18 +13,8 @@
  *  limitations under the License.
  */
 
-package fr.dasilvacampos.network.monitoring
+package com.afterroot.core.network
 
-import androidx.lifecycle.LiveData
-
-/**
- * This liveData enabling network connectivity monitoring
- * @see NetworkStateHolder to get current connection state
- */
-object NetworkEvents : LiveData<Event>() {
-
-    internal fun notify(event: Event) {
-        postValue(event)
-    }
-
+enum class NetworkState {
+    CONNECTED, DISCONNECTED, CONNECTION_LOST
 }

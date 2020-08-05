@@ -16,6 +16,7 @@
 package com.afterroot.core
 
 import android.os.Build
+import android.util.Log
 
 fun onVersionGreaterThanEqualTo(targetVersion: Int, trueFun: () -> Unit, falseFun: (() -> Unit)? = null) {
     if (Build.VERSION.SDK_INT >= targetVersion) {
@@ -34,5 +35,18 @@ fun onVersionLessThan(targetVersion: Int, trueFun: () -> Unit, falseFun: (() -> 
         if (falseFun != null) {
             falseFun()
         }
+    }
+}
+
+/**
+ * just like runCatching but without result
+ * @see runCatching
+ */
+inline fun <T> T.safeRun(TAG: String = "", block: T.() -> Unit) {
+    try {
+        block()
+    } catch (e: Throwable) {
+        //ignore but log it
+        Log.e(TAG, e.toString())
     }
 }
