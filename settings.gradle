@@ -13,12 +13,5 @@
  *  limitations under the License.
  */
 
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        jcenter()
-    }
-}
-
 rootProject.name='Core'
-include ':core'
+include ':core', ':sample'

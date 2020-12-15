@@ -131,6 +131,7 @@ fun Context.isAppInstalled(pName: String): Boolean {
  * @author [Sandip Vaghela](http://github.com/thesandipv)
  * @return true if connection available otherwise false
  */
+@Deprecated("Does not work on Android 10", replaceWith = ReplaceWith("NetworkStateMonitor", "com.afterroot.core.network"))
 fun Context.isNetworkAvailable(): Boolean { //TODO compatibility with android 10
     val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     return cm.activeNetworkInfo?.isConnectedOrConnecting == true
