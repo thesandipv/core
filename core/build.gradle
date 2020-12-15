@@ -17,17 +17,15 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
-    id 'org.jetbrains.dokka' version '0.10.1'
+    id 'org.jetbrains.dokka' version "$dokka_version"
 }
 
-
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.3'
+    compileSdkVersion 30
 
     defaultConfig {
         minSdkVersion minimumSdkVersion
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode minimumSdkVersion * 10000000 + major * 10000 + minor * 100 + patch
         versionName "${major}.${minor}.${patch}"
     }
@@ -45,9 +43,12 @@ android {
     }
 }
 
-dokka {
-    outputFormat = 'html'
-    outputDirectory = "$buildDir/javadoc"
+dokkaHtml.configure {
+    dokkaSourceSets {
+        named("main") {
+            noAndroidSdkLink.set(false)
+        }
+    }
 }
 
 dependencies {
@@ -56,7 +57,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:${appcompatVersion}"
     implementation "androidx.constraintlayout:constraintlayout:${constraintlayoutVersion}"
     implementation "androidx.core:core-ktx:${coreKtxVersion}"
-    implementation "androidx.preference:preference:${preferenceVersion}"
+    implementation "androidx.preference:preference-ktx:${preferenceVersion}"
     implementation "androidx.transition:transition:${transitionVersion}"
     implementation "com.afollestad.material-dialogs:core:${materialDialogsVersion}"
     implementation "com.google.android.material:material:${googleMaterialVersion}"
