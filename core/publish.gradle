@@ -15,7 +15,7 @@
 
 def LIB_GROUP_ID = 'com.afterroot.core'
 def LIB_ARTIFACT_ID = 'core'
-def LIB_VERSION = project.ext.myVersion
+def LIB_VERSION = myVersion
 
 group LIB_GROUP_ID
 version LIB_VERSION
