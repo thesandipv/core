@@ -12,6 +12,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+apply plugin: 'maven-publish'
 
 def LIB_GROUP_ID = 'com.afterroot.core'
 def LIB_ARTIFACT_ID = 'core'
@@ -30,8 +31,8 @@ project.ext {
 }
 
 task sourceJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
     classifier "sources"
+    from android.sourceSets.main.java.srcDirs
 }
 
 if (file("publish.properties").exists()) {
@@ -43,8 +44,7 @@ if (file("publish.properties").exists()) {
         repositories {
             maven {
                 name = "GitHubPackages"
-                description = mavLibraryDescription
-                url = uri("https://maven.pkg.github.com/afterroot/core")
+                url = uri(mavGitUrl)
                 credentials {
                     username = properties.getProperty("gpr.user") ?: System.getenv("USERNAME")
                     password = properties.getProperty("gpr.key") ?: System.getenv("TOKEN")
@@ -63,19 +63,44 @@ if (file("publish.properties").exists()) {
                 artifact("$buildDir/outputs/aar/core-release.aar")
                 artifact(sourceJar)
 
-                pom.withXml {
-                    def dependenciesNode = asNode().appendNode('dependencies')
-
-                    //Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
-                    configurations.api.allDependencies.each {
-                        def dependencyNode = dependenciesNode.appendNode('dependency')
-                        dependencyNode.appendNode('groupId', it.group)
-                        dependencyNode.appendNode('artifactId', it.name)
-                        dependencyNode.appendNode('version', it.version)
+                pom {
+                    packaging 'aar'
+                    name = LIB_ARTIFACT_ID
+                    description = mavLibraryDescription
+                    url = 'https://github.com/afterroot/core'
+                    licenses {
+                        license {
+                            name = 'The Apache Software License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                            distribution = 'repo'
+                        }
+                    }
+                    developers {
+                        developer {
+                            name = 'AfterROOT'
+                        }
+                    }
+                    scm {
+                        connection = 'scm:git:github.com/afterroot/core.git'
+                        developerConnection = 'scm:git:ssh://github.com/afterroot/core.git'
+                        url = 'https://github.com/afterroot/core/tree/main'
+                    }
+                    withXml {
+                        //Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
+                        configurations.api.allDependencies.each {
+                            def dependencyNode = asNode().appendNode('dependencies').appendNode('dependency')
+                            dependencyNode.appendNode('groupId', it.group)
+                            dependencyNode.appendNode('artifactId', it.name)
+                            dependencyNode.appendNode('version', it.version)
+                        }
                     }
                 }
             }
         }
+    }
+
+    afterEvaluate {
+        publishCorePublicationToGitHubPackagesRepository.dependsOn assembleRelease
     }
 } else {
     logger.log(LogLevel.ERROR, "publish.properties file not found. Please add publish.properties to module root.")

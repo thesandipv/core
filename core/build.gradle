@@ -17,17 +17,16 @@ plugins {
     id 'com.android.library'
     id 'kotlin-android'
     id 'org.jetbrains.dokka' version "1.5.30"
-    id 'maven-publish'
 }
 
 ext {
     //Libs
-    kotlin_version = '1.5.21'
+    kotlin_version = '1.5.31'
     //Configs
     minimumSdkVersion = 16
     major = 0
     minor = 3
-    patch = 2
+    patch = 3
     myVersion = "${major}.${minor}.${patch}"
 }
 
@@ -66,12 +65,12 @@ dokkaHtml.configure {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    implementation "androidx.appcompat:appcompat:1.4.0-alpha03"
+    implementation "androidx.appcompat:appcompat:1.4.0-beta01"
     implementation "androidx.constraintlayout:constraintlayout:2.1.1"
-    implementation "androidx.core:core-ktx:1.7.0-beta01"
+    implementation "androidx.core:core-ktx:1.7.0-rc01"
     implementation "androidx.preference:preference-ktx:1.1.1"
     implementation "androidx.transition:transition:1.4.1"
     implementation "com.afollestad.material-dialogs:core:3.3.0"
-    implementation "com.google.android.material:material:1.5.0-alpha03"
+    implementation "com.google.android.material:material:1.5.0-alpha04"
 }
 apply from: 'publish.gradle'
