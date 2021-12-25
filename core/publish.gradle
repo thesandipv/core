@@ -1,18 +1,3 @@
-/*
- * Copyright (C) 2021 Sandip Vaghela
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *         http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 def LIB_GROUP_ID = 'com.afterroot.core'
 def LIB_ARTIFACT_ID = 'core'
 def LIB_VERSION = myVersion
@@ -21,62 +6,62 @@ group LIB_GROUP_ID
 version LIB_VERSION
 
 project.ext {
-    mavGitUrl = 'https://maven.pkg.github.com/afterroot/core'
-    mavLibraryDescription = "Core Package for AfterROOT Apps"
-    mavLibraryLicenses = ["Apache-2.0": 'http://www.apache.org/licenses/LICENSE-2.0.txt']
-    mavProjectName = 'core'
-    mavPublishToMavenLocal = true
-    mavSiteUrl = 'https://afterroot.web.app'
+	mavGitUrl = 'https://maven.pkg.github.com/afterroot/core'
+	mavLibraryDescription = "Core Package for AfterROOT Apps"
+	mavLibraryLicenses = ["Apache-2.0": 'http://www.apache.org/licenses/LICENSE-2.0.txt']
+	mavProjectName = 'core'
+	mavPublishToMavenLocal = true
+	mavSiteUrl = 'https://afterroot.web.app'
 }
 
 task sourceJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier "sources"
+	from android.sourceSets.main.java.srcDirs
+	classifier "sources"
 }
 
 if (file("publish.properties").exists()) {
-    def properties = new Properties()
-    properties.load(new FileInputStream(file("publish.properties")))
+	def properties = new Properties()
+	properties.load(new FileInputStream(file("publish.properties")))
 
-    //Publish to GitHub Packages
-    publishing {
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                description = mavLibraryDescription
-                url = uri("https://maven.pkg.github.com/afterroot/core")
-                credentials {
-                    username = properties.getProperty("gpr.user") ?: System.getenv("USERNAME")
-                    password = properties.getProperty("gpr.key") ?: System.getenv("TOKEN")
-                }
-            }
-            maven {
-                name = 'CustomMavenRepo'
-                url = "file://${buildDir}/repo"
-            }
-        }
-        publications {
-            core(MavenPublication) {
-                groupId LIB_GROUP_ID
-                artifactId LIB_ARTIFACT_ID
-                version LIB_VERSION
-                artifact("$buildDir/outputs/aar/core-release.aar")
-                artifact(sourceJar)
+	//Publish to GitHub Packages
+	publishing {
+		repositories {
+			maven {
+				name = "GitHubPackages"
+				description = mavLibraryDescription
+				url = uri("https://maven.pkg.github.com/afterroot/core")
+				credentials {
+					username = properties.getProperty("gpr.user") ?: System.getenv("USERNAME")
+					password = properties.getProperty("gpr.key") ?: System.getenv("TOKEN")
+				}
+			}
+			maven {
+				name = 'CustomMavenRepo'
+				url = "file://${buildDir}/repo"
+			}
+		}
+		publications {
+			core(MavenPublication) {
+				groupId LIB_GROUP_ID
+				artifactId LIB_ARTIFACT_ID
+				version LIB_VERSION
+				artifact("$buildDir/outputs/aar/core-release.aar")
+				artifact(sourceJar)
 
-                pom.withXml {
-                    def dependenciesNode = asNode().appendNode('dependencies')
+				pom.withXml {
+					def dependenciesNode = asNode().appendNode('dependencies')
 
-                    //Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
-                    configurations.api.allDependencies.each {
-                        def dependencyNode = dependenciesNode.appendNode('dependency')
-                        dependencyNode.appendNode('groupId', it.group)
-                        dependencyNode.appendNode('artifactId', it.name)
-                        dependencyNode.appendNode('version', it.version)
-                    }
-                }
-            }
-        }
-    }
+					//Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
+					configurations.api.allDependencies.each {
+						def dependencyNode = dependenciesNode.appendNode('dependency')
+						dependencyNode.appendNode('groupId', it.group)
+						dependencyNode.appendNode('artifactId', it.name)
+						dependencyNode.appendNode('version', it.version)
+					}
+				}
+			}
+		}
+	}
 } else {
-    logger.log(LogLevel.ERROR, "publish.properties file not found. Please add publish.properties to module root.")
+	logger.log(LogLevel.ERROR, "publish.properties file not found. Please add publish.properties to module root.")
 }
