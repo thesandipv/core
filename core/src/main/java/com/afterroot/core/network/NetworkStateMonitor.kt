@@ -69,4 +69,3 @@ class NetworkStateMonitor(private val cm: ConnectivityManager) : LiveData<Networ
             .build()
     }
 }
-
