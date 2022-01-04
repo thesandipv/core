@@ -27,31 +27,31 @@ import android.net.Uri
 import android.os.Build
 import org.jetbrains.anko.internals.AnkoInternals
 
-inline fun <reified T: Activity> Context.startActivity(vararg params: Pair<String, Any?>) =
+inline fun <reified T : Activity> Context.startActivity(vararg params: Pair<String, Any?>) =
     AnkoInternals.internalStartActivity(this, T::class.java, params)
 
-inline fun <reified T: Activity> AnkoContext<*>.startActivity(vararg params: Pair<String, Any?>) =
+inline fun <reified T : Activity> AnkoContext<*>.startActivity(vararg params: Pair<String, Any?>) =
     AnkoInternals.internalStartActivity(ctx, T::class.java, params)
 
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
-inline fun <reified T: Activity> Fragment.startActivity(vararg params: Pair<String, Any?>) =
+inline fun <reified T : Activity> Fragment.startActivity(vararg params: Pair<String, Any?>) =
     AnkoInternals.internalStartActivity(activity, T::class.java, params)
 
-inline fun <reified T: Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any?>) =
+inline fun <reified T : Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any?>) =
     AnkoInternals.internalStartActivityForResult(this, T::class.java, requestCode, params)
 
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
-inline fun <reified T: Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any?>) =
+inline fun <reified T : Activity> Fragment.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any?>) =
     startActivityForResult(AnkoInternals.createIntent(act, T::class.java, params), requestCode)
 
-inline fun <reified T: Service> Context.startService(vararg params: Pair<String, Any?>) =
+inline fun <reified T : Service> Context.startService(vararg params: Pair<String, Any?>) =
     AnkoInternals.internalStartService(this, T::class.java, params)
 
-inline fun <reified T: Service> AnkoContext<*>.startService(vararg params: Pair<String, Any?>) =
+inline fun <reified T : Service> AnkoContext<*>.startService(vararg params: Pair<String, Any?>) =
     AnkoInternals.internalStartService(ctx, T::class.java, params)
 
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
-inline fun <reified T: Service> Fragment.startService(vararg params: Pair<String, Any?>) =
+inline fun <reified T : Service> Fragment.startService(vararg params: Pair<String, Any?>) =
     AnkoInternals.internalStartService(activity, T::class.java, params)
 
 inline fun <reified T : Service> Context.stopService(vararg params: Pair<String, Any?>) =
@@ -64,14 +64,14 @@ inline fun <reified T : Service> AnkoContext<*>.stopService(vararg params: Pair<
 inline fun <reified T : Service> Fragment.stopService(vararg params: Pair<String, Any?>) =
     AnkoInternals.internalStopService(activity, T::class.java, params)
 
-inline fun <reified T: Any> Context.intentFor(vararg params: Pair<String, Any?>): Intent =
+inline fun <reified T : Any> Context.intentFor(vararg params: Pair<String, Any?>): Intent =
     AnkoInternals.createIntent(this, T::class.java, params)
 
-inline fun <reified T: Any> AnkoContext<*>.intentFor(vararg params: Pair<String, Any?>): Intent =
+inline fun <reified T : Any> AnkoContext<*>.intentFor(vararg params: Pair<String, Any?>): Intent =
     AnkoInternals.createIntent(ctx, T::class.java, params)
 
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
-inline fun <reified T: Any> Fragment.intentFor(vararg params: Pair<String, Any?>): Intent =
+inline fun <reified T : Any> Fragment.intentFor(vararg params: Pair<String, Any?>): Intent =
     AnkoInternals.createIntent(activity, T::class.java, params)
 
 /**
@@ -206,7 +206,6 @@ fun Context.email(email: String, subject: String = "", text: String = ""): Boole
         return true
     }
     return false
-
 }
 
 inline fun AnkoContext<*>.makeCall(number: String): Boolean = ctx.makeCall(number)

@@ -84,7 +84,7 @@ inline fun <reified T : View> Fragment.findOptional(@IdRes id: Int): T? = view?.
 inline fun <reified T : View> Dialog.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
-inline fun <T: Fragment> T.withArguments(vararg params: Pair<String, Any?>): T {
+inline fun <T : Fragment> T.withArguments(vararg params: Pair<String, Any?>): T {
     arguments = bundleOf(*params)
     return this
 }

@@ -77,7 +77,7 @@ object AnkoInternals {
         style(v)
         if (v is ViewGroup) {
             val maxIndex = v.childCount - 1
-            for (i in 0 .. maxIndex) {
+            for (i in 0..maxIndex) {
                 v.getChildAt(i)?.let { applyRecursively(it, style) }
             }
         }
@@ -214,12 +214,10 @@ object AnkoInternals {
         } catch (e: NoSuchMethodException) {
             try {
                 return getConstructor2().newInstance(ctx, null)
-            }
-            catch (e: NoSuchMethodException) {
+            } catch (e: NoSuchMethodException) {
                 throw AnkoException("Can't initiate View of class ${viewClass.name}: can't find proper constructor")
             }
         }
-
     }
 
     @JvmStatic
@@ -308,8 +306,10 @@ object AnkoInternals {
 
         if (rightToLeft != null) {
             if (config == null) return false
-            val rtlMode = (config.screenLayout and
-                InternalConfiguration.SCREENLAYOUT_LAYOUTDIR_MASK) == InternalConfiguration.SCREENLAYOUT_LAYOUTDIR_RTL
+            val rtlMode = (
+                config.screenLayout and
+                    InternalConfiguration.SCREENLAYOUT_LAYOUTDIR_MASK
+                ) == InternalConfiguration.SCREENLAYOUT_LAYOUTDIR_RTL
             if (rtlMode != rightToLeft) return false
         }
 
@@ -318,11 +318,9 @@ object AnkoInternals {
 
             if (config.smallestScreenWidthDp == Configuration.SMALLEST_SCREEN_WIDTH_DP_UNDEFINED) {
                 if (smallestWidth != Configuration.SMALLEST_SCREEN_WIDTH_DP_UNDEFINED) return false
-            }
-            else if (config.smallestScreenWidthDp < smallestWidth) return false
+            } else if (config.smallestScreenWidthDp < smallestWidth) return false
         }
 
         return true
     }
-
 }
