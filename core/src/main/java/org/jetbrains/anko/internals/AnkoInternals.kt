@@ -56,11 +56,11 @@ object AnkoInternals {
     }
 
     fun <T : View> addView(ctx: Context, view: T) {
-        ctx.UI { AnkoInternals.addView(this, view) }
+        ctx.UI { addView(this, view) }
     }
 
     fun <T : View> addView(activity: Activity, view: T) {
-        createAnkoContext(activity, { AnkoInternals.addView(this, view) }, true)
+        createAnkoContext(activity, { addView(this, view) }, true)
     }
 
     fun wrapContextIfNeeded(ctx: Context, theme: Int): Context {
@@ -101,12 +101,12 @@ object AnkoInternals {
 
     // Some constants not present in Android SDK v.15
     private object InternalConfiguration {
-        val SCREENLAYOUT_LAYOUTDIR_MASK = 0xC0
-        val SCREENLAYOUT_LAYOUTDIR_SHIFT = 6
-        val SCREENLAYOUT_LAYOUTDIR_RTL = 0x02 shl SCREENLAYOUT_LAYOUTDIR_SHIFT
+        const val SCREENLAYOUT_LAYOUTDIR_MASK = 0xC0
+        const val SCREENLAYOUT_LAYOUTDIR_SHIFT = 6
+        const val SCREENLAYOUT_LAYOUTDIR_RTL = 0x02 shl SCREENLAYOUT_LAYOUTDIR_SHIFT
 
-        val UI_MODE_TYPE_APPLIANCE = 0x05
-        val UI_MODE_TYPE_WATCH = 0x06
+        const val UI_MODE_TYPE_APPLIANCE = 0x05
+        const val UI_MODE_TYPE_WATCH = 0x06
     }
 
     @JvmStatic
@@ -152,8 +152,7 @@ object AnkoInternals {
     @JvmStatic
     private fun fillIntentArguments(intent: Intent, params: Array<out Pair<String, Any?>>) {
         params.forEach {
-            val value = it.second
-            when (value) {
+            when (val value = it.second) {
                 null -> intent.putExtra(it.first, null as Serializable?)
                 is Int -> intent.putExtra(it.first, value)
                 is Long -> intent.putExtra(it.first, value)
