@@ -11,8 +11,8 @@ ext {
     //Configs
     minimumSdkVersion = 16
     major = 0
-    minor = 3
-    patch = 4
+    minor = 4
+    patch = 0
     myVersion = "${major}.${minor}.${patch}"
 }
 
@@ -53,11 +53,12 @@ dependencies {
 
     implementation "androidx.appcompat:appcompat:1.4.1"
     implementation "androidx.constraintlayout:constraintlayout:2.1.3"
-    implementation "androidx.core:core-ktx:1.8.0-alpha04"
+    implementation "androidx.core:core-ktx:1.9.0-alpha01"
     implementation "androidx.fragment:fragment-ktx:1.4.1"
     implementation "androidx.preference:preference-ktx:1.2.0"
     implementation "androidx.transition:transition:1.4.1"
     implementation "com.afollestad.material-dialogs:core:3.3.0"
-    implementation "com.google.android.material:material:1.6.0-alpha02"
+    implementation "com.google.android.material:material:1.6.0-alpha03"
+    implementation "com.google.code.gson:gson:2.9.0"
 }
 apply from: 'publish.gradle'

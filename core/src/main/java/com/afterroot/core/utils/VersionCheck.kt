@@ -15,33 +15,38 @@
 
 package com.afterroot.core.utils
 
-data class VersionInfo(
-    var currentVersion: Long = 0,
-    var latestLink: String? = null,
-    var latestVersion: Long = 0
-)
+import com.afterroot.core.data.model.VersionInfo
 
-class VersionCheck {
-    val version = VersionInfo()
+class VersionCheck(private var versionInfo: VersionInfo = VersionInfo()) {
 
-    fun setLatestVersion(latest: Long) {
-        version.latestVersion = latest
+    fun setLatestVersion(latest: Int) {
+        versionInfo = versionInfo.copy(latestVersion = latest)
     }
 
     fun setLatestVersionLink(link: String) {
-        version.latestLink = link
+        versionInfo = versionInfo.copy(latestLink = link)
     }
 
-    fun setCurrentVersion(current: Long) {
-        version.currentVersion = current
+    fun setCurrentVersion(current: Int) {
+        versionInfo = versionInfo.copy(currentVersion = current)
     }
 
-    inline fun onUpdateAvailable(crossinline onUpdate: (VersionInfo) -> Unit) {
-        if (version.currentVersion == 0L || version.latestVersion == 0L) {
+    fun setDisabledVersions(disabled: List<Int>) {
+        versionInfo = versionInfo.copy(disabledVersions = disabled)
+    }
+
+    fun onUpdateAvailable(onUpdate: (VersionInfo) -> Unit) {
+        if (versionInfo.currentVersion == 0 || versionInfo.latestVersion == 0) {
             throw IllegalStateException("Parameter 'currentVersion' or 'latestVersion' not set.")
         }
-        if (version.latestVersion > version.currentVersion) {
-            onUpdate(version)
+        if (versionInfo.latestVersion > versionInfo.currentVersion && !versionInfo.isDisabled()) {
+            onUpdate(versionInfo)
+        }
+    }
+
+    fun onVersionDisabled(onDisabled: (VersionInfo) -> Unit) {
+        if (versionInfo.isDisabled()) {
+            onDisabled(versionInfo)
         }
     }
 }
