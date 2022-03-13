@@ -1,0 +1,52 @@
+name: Bulid & Publish Core
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - v*
+    paths-ignore:
+      - '.idea/**'
+
+jobs:
+  build:
+    name: core
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+
+    steps:
+      - name: Check Out
+        id: check-out
+        uses: actions/checkout@v2
+
+      - name: set up JDK
+        id: setup-jdk
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Grant execute permission for gradlew
+        id: grant-execute-permissions-for-gradle
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        id: build
+        uses: gradle/gradle-build-action@v2
+        env:
+          CI: true
+          USERNAME: ${{ secrets.GHUSERNAME }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          arguments: :core:assemble --stacktrace
+
+      - name: Publish with Gradle
+        id: publish
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: gradle/gradle-build-action@v2
+        env:
+          CI: true
+          USERNAME: ${{ secrets.GHUSERNAME }}
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          arguments: :core:assemble :core:publish --stacktrace

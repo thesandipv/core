@@ -10,7 +10,7 @@ project.ext {
     mavLibraryDescription = "Core Package for AfterROOT Apps"
     mavLibraryLicenses = ["Apache-2.0": 'http://www.apache.org/licenses/LICENSE-2.0.txt']
     mavProjectName = 'core'
-    mavPublishToMavenLocal = true
+    mavPublishToMavenLocal = !System.getenv("CI")
     mavSiteUrl = 'https://afterroot.web.app'
 }
 
@@ -19,49 +19,48 @@ task sourceJar(type: Jar) {
     classifier "sources"
 }
 
-if (file("publish.properties").exists()) {
-    def properties = new Properties()
-    properties.load(new FileInputStream(file("publish.properties")))
+def publishPropertiesFile = file("publish.properties")
+def properties = new Properties()
+if (publishPropertiesFile.exists()) {
+    properties.load(new FileInputStream(publishPropertiesFile))
+}
 
-    //Publish to GitHub Packages
-    publishing {
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                description = mavLibraryDescription
-                url = uri("https://maven.pkg.github.com/afterroot/core")
-                credentials {
-                    username = properties.getProperty("gpr.user") ?: System.getenv("USERNAME")
-                    password = properties.getProperty("gpr.key") ?: System.getenv("TOKEN")
-                }
-            }
-            maven {
-                name = 'CustomMavenRepo'
-                url = "file://${buildDir}/repo"
+//Publish to GitHub Packages
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            description = mavLibraryDescription
+            url = uri("https://maven.pkg.github.com/afterroot/core")
+            credentials {
+                username = properties.getProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = properties.getProperty("gpr.key") ?: System.getenv("TOKEN")
             }
         }
-        publications {
-            core(MavenPublication) {
-                groupId LIB_GROUP_ID
-                artifactId LIB_ARTIFACT_ID
-                version LIB_VERSION
-                artifact("$buildDir/outputs/aar/core-release.aar")
-                artifact(sourceJar)
+        maven {
+            name = 'CustomMavenRepo'
+            url = "file://${buildDir}/repo"
+        }
+    }
+    publications {
+        core(MavenPublication) {
+            groupId LIB_GROUP_ID
+            artifactId LIB_ARTIFACT_ID
+            version LIB_VERSION
+            artifact("$buildDir/outputs/aar/core-release.aar")
+            artifact(sourceJar)
 
-                pom.withXml {
-                    def dependenciesNode = asNode().appendNode('dependencies')
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
 
-                    //Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
-                    configurations.api.allDependencies.each {
-                        def dependencyNode = dependenciesNode.appendNode('dependency')
-                        dependencyNode.appendNode('groupId', it.group)
-                        dependencyNode.appendNode('artifactId', it.name)
-                        dependencyNode.appendNode('version', it.version)
-                    }
+                //Iterate over the compile dependencies (we don't want the test ones), adding a <dependency> node for each
+                configurations.api.allDependencies.each {
+                    def dependencyNode = dependenciesNode.appendNode('dependency')
+                    dependencyNode.appendNode('groupId', it.group)
+                    dependencyNode.appendNode('artifactId', it.name)
+                    dependencyNode.appendNode('version', it.version)
                 }
             }
         }
     }
-} else {
-    logger.log(LogLevel.ERROR, "publish.properties file not found. Please add publish.properties to module root.")
 }

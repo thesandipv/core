@@ -32,6 +32,7 @@ import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.Interpolator
 import android.webkit.MimeTypeMap
+import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
@@ -162,6 +163,25 @@ fun Context.getDrawableExt(@DrawableRes id: Int, @ColorRes tint: Int? = null): D
         if (tint != null) {
             DrawableCompat.setTint(drawable, ContextCompat.getColor(this, tint))
         }
+    } catch (e: Exception) {
+        Log.e("Extensions", "getDrawableExt: ${e.stackTrace}")
+    }
+    return drawable
+}
+
+/**
+ * Helper function for get drawable with tint using Compat Method
+ * @param id Resource id of [Drawable]
+ * @param tint tint to apply. Should be color
+ * @since v0.4.1
+ * @author [Sandip Vaghela](http://github.com/thesandipv)
+ * @return [Drawable] with tint
+ */
+fun Context.getTintedDrawable(@DrawableRes id: Int, @ColorInt tint: Int): Drawable? {
+    var drawable: Drawable? = null
+    try {
+        drawable = ContextCompat.getDrawable(this, id)!!
+        DrawableCompat.setTint(drawable, tint)
     } catch (e: Exception) {
         Log.e("Extensions", "getDrawableExt: ${e.stackTrace}")
     }
