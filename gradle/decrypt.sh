@@ -1,1 +1,1 @@
-gpg --quiet --batch --yes --decrypt --passphrase=${ENCRYPT_KEY} --output release/keystore.jks release/keystore.gpg
+gpg --quiet --batch --yes --decrypt --passphrase=${ENCRYPT_KEY} --output utils/publish.properties utils/publish.properties.gpg

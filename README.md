@@ -1,3 +1,3 @@
-# Core
+# AfterROOT Utils
 
-[![maven](https://api.bintray.com/packages/thesandipv/afterroot/core/images/download.svg)](https://bintray.com/thesandipv/afterroot/core/_latestVersion)
+[![build](https://github.com/afterroot/utils/actions/workflows/android.yml/badge.svg)](https://github.com/afterroot/utils/actions/workflows/android.yml)

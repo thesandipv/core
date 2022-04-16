@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.afterroot.core.data.model
+package com.afterroot.utils.data.model
 
 import com.google.gson.annotations.SerializedName
 

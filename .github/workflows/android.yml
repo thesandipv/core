@@ -1,4 +1,4 @@
-name: Bulid & Publish Core
+name: Build & Publish AfterROOT Utils
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: core
+    name: utils
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -38,7 +38,7 @@ jobs:
           USERNAME: ${{ secrets.GHUSERNAME }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          arguments: :core:assemble --stacktrace
+          arguments: :utils:assemble --stacktrace
 
       - name: Publish with Gradle
         id: publish
@@ -49,4 +49,4 @@ jobs:
           USERNAME: ${{ secrets.GHUSERNAME }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          arguments: :core:assemble :core:publish --stacktrace
+          arguments: :utils:assemble :utils:publish --stacktrace

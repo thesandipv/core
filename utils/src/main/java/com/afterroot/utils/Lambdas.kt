@@ -13,7 +13,7 @@
  *  limitations under the License.
  */
 
-package com.afterroot.core
+package com.afterroot.utils
 
 import android.os.Build
 import android.util.Log

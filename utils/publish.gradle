@@ -1,15 +1,15 @@
-def LIB_GROUP_ID = 'com.afterroot.core'
-def LIB_ARTIFACT_ID = 'core'
+def LIB_GROUP_ID = 'com.afterroot'
+def LIB_ARTIFACT_ID = 'utils'
 def LIB_VERSION = myVersion
 
 group LIB_GROUP_ID
 version LIB_VERSION
 
 project.ext {
-    mavGitUrl = 'https://maven.pkg.github.com/afterroot/core'
-    mavLibraryDescription = "Core Package for AfterROOT Apps"
+    mavGitUrl = 'https://maven.pkg.github.com/afterroot/utils'
+    mavLibraryDescription = "Utils for AfterROOT Apps"
     mavLibraryLicenses = ["Apache-2.0": 'http://www.apache.org/licenses/LICENSE-2.0.txt']
-    mavProjectName = 'core'
+    mavProjectName = 'utils'
     mavPublishToMavenLocal = !System.getenv("CI")
     mavSiteUrl = 'https://afterroot.web.app'
 }
@@ -31,7 +31,7 @@ publishing {
         maven {
             name = "GitHubPackages"
             description = mavLibraryDescription
-            url = uri("https://maven.pkg.github.com/afterroot/core")
+            url = uri("https://maven.pkg.github.com/afterroot/utils")
             credentials {
                 username = properties.getProperty("gpr.user") ?: System.getenv("USERNAME")
                 password = properties.getProperty("gpr.key") ?: System.getenv("TOKEN")
@@ -43,11 +43,11 @@ publishing {
         }
     }
     publications {
-        core(MavenPublication) {
+        utils(MavenPublication) {
             groupId LIB_GROUP_ID
             artifactId LIB_ARTIFACT_ID
             version LIB_VERSION
-            artifact("$buildDir/outputs/aar/core-release.aar")
+            artifact("$buildDir/outputs/aar/utils-release.aar")
             artifact(sourceJar)
 
             pom.withXml {

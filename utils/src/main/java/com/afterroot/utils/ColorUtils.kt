@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.afterroot.core.utils
+package com.afterroot.utils
 
 import android.content.Context
 import android.view.View

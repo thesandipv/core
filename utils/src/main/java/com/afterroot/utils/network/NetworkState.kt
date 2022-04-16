@@ -13,7 +13,7 @@
  *  limitations under the License.
  */
 
-package com.afterroot.core.network
+package com.afterroot.utils.network
 
 enum class NetworkState {
     CONNECTED, DISCONNECTED, CONNECTION_LOST
