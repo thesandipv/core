@@ -16,8 +16,13 @@
 package com.afterroot.utils
 
 import com.afterroot.utils.data.model.VersionInfo
+import timber.log.Timber
 
 class VersionCheck(private var versionInfo: VersionInfo = VersionInfo()) {
+
+    init {
+        Timber.d("Initializing VersionCheck...[$versionInfo]")
+    }
 
     fun setLatestVersion(latest: Int) {
         versionInfo = versionInfo.copy(latestVersion = latest)
@@ -37,7 +42,7 @@ class VersionCheck(private var versionInfo: VersionInfo = VersionInfo()) {
 
     fun onUpdateAvailable(onUpdate: (VersionInfo) -> Unit) {
         if (versionInfo.currentVersion == 0 || versionInfo.latestVersion == 0) {
-            throw IllegalStateException("Parameter 'currentVersion' or 'latestVersion' not set.")
+            throw IllegalArgumentException("Parameter 'currentVersion' or 'latestVersion' not set.")
         }
         if (versionInfo.latestVersion > versionInfo.currentVersion && !versionInfo.isDisabled()) {
             onUpdate(versionInfo)
