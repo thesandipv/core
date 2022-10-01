@@ -28,5 +28,7 @@ fun Context.getMaterialColor(@AttrRes colorAttr: Int, errorMessageComponent: Str
 fun View.getMaterialColor(@AttrRes colorAttr: Int, @ColorInt defaultValue: Int? = null): Int {
     return if (defaultValue == null) {
         MaterialColors.getColor(this, colorAttr)
-    } else MaterialColors.getColor(this, colorAttr, defaultValue)
+    } else {
+        MaterialColors.getColor(this, colorAttr, defaultValue)
+    }
 }

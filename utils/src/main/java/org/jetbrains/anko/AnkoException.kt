@@ -15,6 +15,7 @@
  */
 
 @file:Suppress("unused")
+
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -110,7 +111,11 @@ inline fun <T : Any> Context.configuration(
         this, screenSize, density, language, orientation, long,
         fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth
     )
-) f() else null
+) {
+    f()
+} else {
+    null
+}
 
 /**
  * Execute [f] if the device configuration matches all given constraints.
@@ -147,7 +152,11 @@ inline fun <T : Any> Activity.configuration(
         this, screenSize, density, language, orientation, long,
         fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth
     )
-) f() else null
+) {
+    f()
+} else {
+    null
+}
 
 /**
  * Execute [f] if the device configuration matches all given constraints.
@@ -184,7 +193,11 @@ inline fun <T : Any> AnkoContext<*>.configuration(
         ctx, screenSize, density, language, orientation, long,
         fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth
     )
-) f() else null
+) {
+    f()
+} else {
+    null
+}
 
 /**
  * Execute [f] if the device configuration matches all given constraints.
@@ -225,8 +238,14 @@ inline fun <T : Any> Fragment.configuration(
                 act, screenSize, density, language, orientation, long,
                 fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth
             )
-        ) f() else null
-    } else null
+        ) {
+            f()
+        } else {
+            null
+        }
+    } else {
+        null
+    }
 }
 
 /**

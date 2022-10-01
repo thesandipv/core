@@ -153,6 +153,7 @@ inline fun Intent.noHistory(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_NO
 inline fun Intent.singleTop(): Intent = apply { addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP) }
 
 inline fun AnkoContext<*>.browse(url: String, newTask: Boolean = false) = ctx.browse(url, newTask)
+
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun Fragment.browse(url: String, newTask: Boolean = false) = activity.browse(url, newTask)
 
@@ -172,6 +173,7 @@ fun Context.browse(url: String, newTask: Boolean = false): Boolean {
 }
 
 inline fun AnkoContext<*>.share(text: String, subject: String = "") = ctx.share(text, subject)
+
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun Fragment.share(text: String, subject: String = "") = activity.share(text, subject)
 
@@ -190,6 +192,7 @@ fun Context.share(text: String, subject: String = ""): Boolean {
 }
 
 inline fun AnkoContext<*>.email(email: String, subject: String = "", text: String = "") = ctx.email(email, subject, text)
+
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun Fragment.email(email: String, subject: String = "", text: String = "") = activity.email(email, subject, text)
 
@@ -197,10 +200,12 @@ fun Context.email(email: String, subject: String = "", text: String = ""): Boole
     val intent = Intent(Intent.ACTION_SENDTO)
     intent.data = Uri.parse("mailto:")
     intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-    if (subject.isNotEmpty())
+    if (subject.isNotEmpty()) {
         intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-    if (text.isNotEmpty())
+    }
+    if (text.isNotEmpty()) {
         intent.putExtra(Intent.EXTRA_TEXT, text)
+    }
     if (intent.resolveActivity(packageManager) != null) {
         startActivity(intent)
         return true
@@ -209,6 +214,7 @@ fun Context.email(email: String, subject: String = "", text: String = ""): Boole
 }
 
 inline fun AnkoContext<*>.makeCall(number: String): Boolean = ctx.makeCall(number)
+
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun Fragment.makeCall(number: String): Boolean = activity.makeCall(number)
 
@@ -224,6 +230,7 @@ fun Context.makeCall(number: String): Boolean {
 }
 
 inline fun AnkoContext<*>.sendSMS(number: String, text: String = ""): Boolean = ctx.sendSMS(number, text)
+
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun Fragment.sendSMS(number: String, text: String = ""): Boolean = activity.sendSMS(number, text)
 
