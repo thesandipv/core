@@ -59,9 +59,9 @@ import com.afterroot.utils.R
 fun View.visible(
     value: Boolean,
     transition: Transition? = Fade(if (value) Fade.MODE_IN else Fade.MODE_OUT),
-    viewGroup: ViewGroup = parent as ViewGroup
+    viewGroup: ViewGroup? = parent as ViewGroup?
 ) {
-    if (transition != null) {
+    if (transition != null && viewGroup != null) {
         TransitionManager.beginDelayedTransition(viewGroup, transition)
     }
     visibility = if (value) View.VISIBLE else View.GONE
