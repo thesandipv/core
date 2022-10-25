@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    id("com.android.library")
+    id("kotlin-android")
     id("org.jetbrains.dokka") version "1.7.10"
     id("maven-publish")
 }
