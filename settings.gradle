@@ -13,5 +13,5 @@
  *  limitations under the License.
  */
 
-rootProject.name='utils'
-include ':utils'
+rootProject.name = "utils"
+include ":utils"
