@@ -1,6 +1,6 @@
 def LIB_GROUP_ID = 'com.afterroot'
 def LIB_ARTIFACT_ID = 'utils'
-def LIB_VERSION = myVersion
+def LIB_VERSION = ext.myVersion
 
 group LIB_GROUP_ID
 version LIB_VERSION
