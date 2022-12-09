@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: utils
+    name: utils-lib
     runs-on: ubuntu-latest
     env:
       CI: true
@@ -38,7 +38,7 @@ jobs:
           USERNAME: ${{ secrets.GHUSERNAME }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          arguments: :utils:assemble --stacktrace
+          arguments: :lib:assemble --stacktrace
 
       - name: Publish with Gradle
         id: publish
@@ -49,4 +49,4 @@ jobs:
           USERNAME: ${{ secrets.GHUSERNAME }}
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          arguments: :utils:assemble :utils:publish --stacktrace
+          arguments: :lib:assemble :lib:publish --stacktrace
