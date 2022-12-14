@@ -47,7 +47,7 @@ publishing {
             groupId LIB_GROUP_ID
             artifactId LIB_ARTIFACT_ID
             version LIB_VERSION
-            artifact("$buildDir/outputs/aar/utils-release.aar")
+            artifact("$buildDir/outputs/aar/lib-release.aar")
             artifact(sourceJar)
 
             pom.withXml {
