@@ -20,13 +20,13 @@ plugins {
     id("maven-publish")
 }
 
-//Libs
+// Libs
 val kotlinVersion = "1.7.21"
-//Configs
+// Configs
 val major = 0
 val minor = 5
 val patch = 0
-val myVersion by extra { "${major}.${minor}.${patch}" }
+val myVersion by extra { "$major.$minor.$patch" }
 
 android {
     compileSdk = 33
