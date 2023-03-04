@@ -16,7 +16,7 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("org.jetbrains.dokka") version "1.7.10"
+    id("org.jetbrains.dokka") version "1.8.10"
     id("maven-publish")
 }
 
