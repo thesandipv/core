@@ -20,7 +20,7 @@ plugins {
 }
 
 // Libs
-val kotlinVersion = "1.8.10"
+val kotlinVersion = "1.8.20"
 // Configs
 val major = 0
 val minor = 5
@@ -28,11 +28,12 @@ val patch = 0
 val myVersion by extra { "$major.$minor.$patch" }
 
 android {
+    namespace = "com.afterroot.utils"
+
     compileSdk = 33
 
     defaultConfig {
         minSdk = 16
-        targetSdk = 33
         resourceConfigurations.addAll(listOf("en"))
     }
 

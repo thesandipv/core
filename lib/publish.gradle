@@ -15,8 +15,8 @@ project.ext {
 }
 
 task sourceJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier "sources"
+    from (android.sourceSets.main.java.srcDirs)
+    archiveClassifier =  "sources"
 }
 
 def publishPropertiesFile = file("publish.properties")
