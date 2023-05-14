@@ -24,7 +24,9 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +40,7 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.graphics.drawable.DrawerArrowDrawable
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.preference.PreferenceManager
 import androidx.transition.Fade
@@ -127,15 +130,22 @@ fun Context.isAppInstalled(pName: String): Boolean {
 }
 
 /**
- * Helper function for checking internet connection availability. May not work on API 29 or higher
+ * Helper function for checking internet connection availability.
  * @since v0.1.0
  * @author [Sandip Vaghela](http://github.com/thesandipv)
  * @return true if connection available otherwise false
  */
-@Deprecated("Does not work on Android 10", replaceWith = ReplaceWith("NetworkStateMonitor", "com.afterroot.utils.network"))
-fun Context.isNetworkAvailable(): Boolean { // TODO compatibility with android 10
-    val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    return cm.activeNetworkInfo?.isConnectedOrConnecting == true
+@Suppress("DEPRECATION")
+fun Context.isNetworkAvailable(): Boolean {
+    val cm = getSystemService(this, ConnectivityManager::class.java)
+
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val capabilities = cm?.getNetworkCapabilities(cm.activeNetwork) ?: return false
+        capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+            capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
+    } else {
+        cm?.activeNetworkInfo?.isConnectedOrConnecting == true
+    }
 }
 
 /**
