@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "DEPRECATION")
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -124,6 +124,7 @@ inline fun Context.UI(setContentView: Boolean, init: AnkoContext<Context>.() -> 
 inline fun Context.UI(init: AnkoContext<Context>.() -> Unit): AnkoContext<Context> =
     createAnkoContext(this, init)
 
+@Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
 inline fun Fragment.UI(init: AnkoContext<Fragment>.() -> Unit): AnkoContext<Fragment> =
     createAnkoContext(activity, init)

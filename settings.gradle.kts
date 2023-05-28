@@ -13,5 +13,14 @@
  *  limitations under the License.
  */
 
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+
 rootProject.name = "utils"
-include ":lib"
+
+include(":lib")

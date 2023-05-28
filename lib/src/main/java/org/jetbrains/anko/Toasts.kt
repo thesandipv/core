@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE", "unused")
+@file:Suppress("NOTHING_TO_INLINE", "unused", "DEPRECATION", "DeprecatedCallableAddReplaceWith")
+
 package org.jetbrains.anko
 
 import android.app.Fragment

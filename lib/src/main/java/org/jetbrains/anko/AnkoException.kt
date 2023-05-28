@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused")
+@file:Suppress("unused", "DEPRECATION")
 
 package org.jetbrains.anko
 
@@ -22,6 +22,7 @@ import android.app.Activity
 import android.app.Fragment
 import android.content.Context
 import android.os.Build
+import androidx.annotation.ChecksSdkIntAtLeast
 import org.jetbrains.anko.internals.AnkoInternals
 
 open class AnkoException(message: String = "") : RuntimeException(message)
@@ -260,6 +261,7 @@ inline fun doBeforeSdk(version: Int, f: () -> Unit) {
  * Execute [f] only if the current Android SDK version is [version] or newer.
  * Do nothing otherwise.
  */
+@ChecksSdkIntAtLeast(parameter = 0, lambda = 1)
 inline fun doFromSdk(version: Int, f: () -> Unit) {
     if (Build.VERSION.SDK_INT >= version) f()
 }
@@ -286,7 +288,10 @@ data class AttemptResult<out T> @PublishedApi internal constructor(val value: T?
             return this as AttemptResult<R>
         }
 
-        return attempt { f(value as T) }
+        return attempt {
+            @Suppress("UNCHECKED_CAST")
+            f(value as T)
+        }
     }
 
     inline val isError: Boolean

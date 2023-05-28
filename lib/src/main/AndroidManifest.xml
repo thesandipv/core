@@ -13,17 +13,15 @@
   ~  limitations under the License.
   -->
 
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.afterroot.utils">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application>
         <activity
             android:name="com.jakewharton.processphoenix.ProcessPhoenix"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:process=":phoenix"
             android:exported="false"
-            />
+            android:process=":phoenix"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 </manifest>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("NOTHING_TO_INLINE", "unused")
+@file:Suppress("NOTHING_TO_INLINE", "unused", "DEPRECATION", "DeprecatedCallableAddReplaceWith")
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -158,17 +158,17 @@ inline fun AnkoContext<*>.browse(url: String, newTask: Boolean = false) = ctx.br
 inline fun Fragment.browse(url: String, newTask: Boolean = false) = activity.browse(url, newTask)
 
 fun Context.browse(url: String, newTask: Boolean = false): Boolean {
-    try {
+    return try {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
         if (newTask) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         startActivity(intent)
-        return true
+        true
     } catch (e: ActivityNotFoundException) {
         e.printStackTrace()
-        return false
+        false
     }
 }
 
@@ -178,16 +178,16 @@ inline fun AnkoContext<*>.share(text: String, subject: String = "") = ctx.share(
 inline fun Fragment.share(text: String, subject: String = "") = activity.share(text, subject)
 
 fun Context.share(text: String, subject: String = ""): Boolean {
-    try {
-        val intent = Intent(android.content.Intent.ACTION_SEND)
+    return try {
+        val intent = Intent(Intent.ACTION_SEND)
         intent.type = "text/plain"
-        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject)
-        intent.putExtra(android.content.Intent.EXTRA_TEXT, text)
+        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        intent.putExtra(Intent.EXTRA_TEXT, text)
         startActivity(Intent.createChooser(intent, null))
-        return true
+        true
     } catch (e: ActivityNotFoundException) {
         e.printStackTrace()
-        return false
+        false
     }
 }
 
@@ -219,13 +219,13 @@ inline fun AnkoContext<*>.makeCall(number: String): Boolean = ctx.makeCall(numbe
 inline fun Fragment.makeCall(number: String): Boolean = activity.makeCall(number)
 
 fun Context.makeCall(number: String): Boolean {
-    try {
+    return try {
         val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$number"))
         startActivity(intent)
-        return true
+        true
     } catch (e: Exception) {
         e.printStackTrace()
-        return false
+        false
     }
 }
 
@@ -235,13 +235,13 @@ inline fun AnkoContext<*>.sendSMS(number: String, text: String = ""): Boolean = 
 inline fun Fragment.sendSMS(number: String, text: String = ""): Boolean = activity.sendSMS(number, text)
 
 fun Context.sendSMS(number: String, text: String = ""): Boolean {
-    try {
+    return try {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("sms:$number"))
         intent.putExtra("sms_body", text)
         startActivity(intent)
-        return true
+        true
     } catch (e: Exception) {
         e.printStackTrace()
-        return false
+        false
     }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused", "NOTHING_TO_INLINE")
+@file:Suppress("unused", "NOTHING_TO_INLINE", "DEPRECATION", "DeprecatedCallableAddReplaceWith")
 package org.jetbrains.anko
 
 import android.app.Activity

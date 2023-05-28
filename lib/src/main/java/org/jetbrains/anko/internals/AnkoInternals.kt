@@ -16,6 +16,7 @@
 
 package org.jetbrains.anko.internals
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Service
 import android.app.UiModeManager
@@ -172,6 +173,7 @@ object AnkoInternals {
                     value.isArrayOf<Parcelable>() -> intent.putExtra(it.first, value)
                     else -> throw AnkoException("Intent extra ${it.first} has wrong type ${value.javaClass.name}")
                 }
+
                 is IntArray -> intent.putExtra(it.first, value)
                 is LongArray -> intent.putExtra(it.first, value)
                 is FloatArray -> intent.putExtra(it.first, value)
@@ -185,6 +187,7 @@ object AnkoInternals {
         }
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     @JvmStatic
     inline fun <T> useCursor(cursor: Cursor, f: (Cursor) -> T): T {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -259,6 +262,8 @@ object AnkoInternals {
             if (currentLanguage != language) return false
         }
 
+        @SuppressLint("SwitchIntDef")
+        @Suppress("DEPRECATION")
         if (orientation != null) {
             if (config == null) return false
             when (config.orientation) {

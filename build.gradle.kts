@@ -13,16 +13,10 @@
  *  limitations under the License.
  */
 
-buildscript {
-    ext.kotlin_version = "1.8.21"
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath "com.android.tools.build:gradle:7.4.2"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
+plugins {
+    id("com.android.application") version "8.0.2" apply false
+    id("com.android.library") version "8.0.2" apply false
+    id("org.jetbrains.kotlin.android") version "1.8.21" apply false
 }
 
 allprojects {
@@ -30,8 +24,14 @@ allprojects {
         google()
         mavenCentral()
     }
-}
 
-task clean2(type: Delete) {
-    delete rootProject.buildDir
+    // Configure Java to use our chosen language level. Kotlin will automatically
+    // pick this up
+    plugins.withType<JavaBasePlugin>().configureEach {
+        extensions.configure<JavaPluginExtension> {
+            toolchain {
+                languageVersion.set(JavaLanguageVersion.of(11))
+            }
+        }
+    }
 }
