@@ -14,7 +14,7 @@ project.ext {
     mavSiteUrl = "https://afterroot.web.app"
 }
 
-task sourceJar(type: Jar) {
+tasks.register("sourceJar", Jar) {
     from(android.sourceSets.main.java.srcDirs)
     archiveClassifier = "sources"
 }
