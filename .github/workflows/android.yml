@@ -32,7 +32,7 @@ jobs:
 
       - name: Build with Gradle
         id: build
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v2.7.0
         env:
           CI: true
           USERNAME: ${{ secrets.GHUSERNAME }}
@@ -43,7 +43,7 @@ jobs:
       - name: Publish with Gradle
         id: publish
         if: startsWith(github.ref, 'refs/tags/v')
-        uses: gradle/gradle-build-action@v2
+        uses: gradle/gradle-build-action@v2.7.0
         env:
           CI: true
           USERNAME: ${{ secrets.GHUSERNAME }}
