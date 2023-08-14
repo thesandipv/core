@@ -33,6 +33,8 @@ import android.view.ContextThemeWrapper
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewManager
+import java.io.Serializable
+import java.util.Locale
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.AnkoContextImpl
 import org.jetbrains.anko.AnkoException
@@ -40,15 +42,16 @@ import org.jetbrains.anko.Orientation
 import org.jetbrains.anko.ScreenSize
 import org.jetbrains.anko.UI
 import org.jetbrains.anko.UiMode
-import java.io.Serializable
-import java.util.Locale
 
 object AnkoInternals {
     const val NO_GETTER: String = "Property does not have a getter"
 
     fun noGetter(): Nothing = throw AnkoException("Property does not have a getter")
 
-    private class AnkoContextThemeWrapper(base: Context?, val theme: Int) : ContextThemeWrapper(base, theme)
+    private class AnkoContextThemeWrapper(base: Context?, val theme: Int) : ContextThemeWrapper(
+        base,
+        theme
+    )
 
     fun <T : View> addView(manager: ViewManager, view: T) = when (manager) {
         is ViewGroup -> manager.addView(view)
@@ -111,7 +114,11 @@ object AnkoInternals {
     }
 
     @JvmStatic
-    fun <T> createIntent(ctx: Context, clazz: Class<out T>, params: Array<out Pair<String, Any?>>): Intent {
+    fun <T> createIntent(
+        ctx: Context,
+        clazz: Class<out T>,
+        params: Array<out Pair<String, Any?>>
+    ): Intent {
         val intent = Intent(ctx, clazz)
         if (params.isNotEmpty()) fillIntentArguments(intent, params)
         return intent
@@ -171,7 +178,9 @@ object AnkoInternals {
                     value.isArrayOf<CharSequence>() -> intent.putExtra(it.first, value)
                     value.isArrayOf<String>() -> intent.putExtra(it.first, value)
                     value.isArrayOf<Parcelable>() -> intent.putExtra(it.first, value)
-                    else -> throw AnkoException("Intent extra ${it.first} has wrong type ${value.javaClass.name}")
+                    else -> throw AnkoException(
+                        "Intent extra ${it.first} has wrong type ${value.javaClass.name}"
+                    )
                 }
 
                 is IntArray -> intent.putExtra(it.first, value)
@@ -181,7 +190,9 @@ object AnkoInternals {
                 is CharArray -> intent.putExtra(it.first, value)
                 is ShortArray -> intent.putExtra(it.first, value)
                 is BooleanArray -> intent.putExtra(it.first, value)
-                else -> throw AnkoException("Intent extra ${it.first} has wrong type ${value.javaClass.name}")
+                else -> throw AnkoException(
+                    "Intent extra ${it.first} has wrong type ${value.javaClass.name}"
+                )
             }
             return@forEach
         }
@@ -209,7 +220,10 @@ object AnkoInternals {
     @JvmStatic
     fun <T : View> initiateView(ctx: Context, viewClass: Class<T>): T {
         fun getConstructor1() = viewClass.getConstructor(Context::class.java)
-        fun getConstructor2() = viewClass.getConstructor(Context::class.java, AttributeSet::class.java)
+        fun getConstructor2() = viewClass.getConstructor(
+            Context::class.java,
+            AttributeSet::class.java
+        )
 
         try {
             return getConstructor1().newInstance(ctx)
@@ -217,7 +231,9 @@ object AnkoInternals {
             try {
                 return getConstructor2().newInstance(ctx, null)
             } catch (e: NoSuchMethodException) {
-                throw AnkoException("Can't initiate View of class ${viewClass.name}: can't find proper constructor")
+                throw AnkoException(
+                    "Can't initiate View of class ${viewClass.name}: can't find proper constructor"
+                )
             }
         }
     }

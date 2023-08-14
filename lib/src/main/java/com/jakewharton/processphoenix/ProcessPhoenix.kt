@@ -35,9 +35,13 @@ import android.os.Process
 class ProcessPhoenix : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Process.killProcess(intent.getIntExtra(KEY_MAIN_PROCESS_PID, -1)) // Kill original main process
+        Process.killProcess(
+            intent.getIntExtra(KEY_MAIN_PROCESS_PID, -1)
+        ) // Kill original main process
 
-        @Suppress("DEPRECATION") val intents = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        @Suppress(
+            "DEPRECATION"
+        ) val intents = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableArrayListExtra(KEY_RESTART_INTENTS, Intent::class.java)
         } else {
             intent.getParcelableArrayListExtra(KEY_RESTART_INTENTS)
@@ -74,9 +78,13 @@ class ProcessPhoenix : Activity() {
                 throw IllegalArgumentException("intents cannot be empty")
             }
             // create a new task for the first activity.
-            nextIntents[0].addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            nextIntents[0].addFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            )
             val intent = Intent(context, ProcessPhoenix::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // In case we are called with non-Activity context.
+            intent.addFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK
+            ) // In case we are called with non-Activity context.
             intent.putParcelableArrayListExtra(KEY_RESTART_INTENTS, ArrayList(listOf(*nextIntents)))
             intent.putExtra(KEY_MAIN_PROCESS_PID, Process.myPid())
             context.startActivity(intent)

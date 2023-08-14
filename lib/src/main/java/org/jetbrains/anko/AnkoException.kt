@@ -218,7 +218,9 @@ inline fun <T : Any> AnkoContext<*>.configuration(
  * @param rightToLeft true, if the device locale should be a right-to-left one, false if should not.
  * @param smallestWidth the required smallest width of the screen.
  */
-@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
+@Deprecated(
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+)
 inline fun <T : Any> Fragment.configuration(
     screenSize: ScreenSize? = null,
     density: ClosedRange<Int>? = null,
@@ -281,7 +283,10 @@ inline fun doIfSdk(version: Int, f: () -> Unit) {
  * @property value the return value if code execution was finished without an exception, null otherwise.
  * @property error a caught [Throwable] or null if nothing was caught.
  */
-data class AttemptResult<out T> @PublishedApi internal constructor(val value: T?, val error: Throwable?) {
+data class AttemptResult<out T> @PublishedApi internal constructor(
+    val value: T?,
+    val error: Throwable?
+) {
     inline fun <R> then(f: (T) -> R): AttemptResult<R> {
         if (isError) {
             @Suppress("UNCHECKED_CAST")

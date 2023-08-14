@@ -45,15 +45,21 @@ inline val AnkoContext<*>.defaultSharedPreferences: SharedPreferences
 inline val Context.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(this)
 
-@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
+@Deprecated(
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+)
 inline val Fragment.defaultSharedPreferences: SharedPreferences
     get() = PreferenceManager.getDefaultSharedPreferences(activity)
 
-@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
+@Deprecated(
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+)
 inline val Fragment.act: Activity
     get() = activity
 
-@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
+@Deprecated(
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+)
 inline val Fragment.ctx: Context
     get() = activity
 
@@ -74,24 +80,35 @@ inline val Activity.contentView: View?
 inline fun <reified T : View> View.find(@IdRes id: Int): T = findViewById(id)
 inline fun <reified T : View> Activity.find(@IdRes id: Int): T = findViewById(id)
 
-@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
+@Deprecated(
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+)
 inline fun <reified T : View> Fragment.find(@IdRes id: Int): T = view?.findViewById(id) as T
 inline fun <reified T : View> Dialog.find(@IdRes id: Int): T = findViewById(id)
 
 inline fun <reified T : View> View.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 inline fun <reified T : View> Activity.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 
-@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
-inline fun <reified T : View> Fragment.findOptional(@IdRes id: Int): T? = view?.findViewById(id) as? T
+@Deprecated(
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+)
+inline fun <reified T : View> Fragment.findOptional(
+    @IdRes id: Int
+): T? = view?.findViewById(id) as? T
 inline fun <reified T : View> Dialog.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 
-@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
+@Deprecated(
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+)
 inline fun <T : Fragment> T.withArguments(vararg params: Pair<String, Any?>): T {
     arguments = bundleOf(*params)
     return this
 }
 
-@Deprecated(message = "Use the Android KTX version", replaceWith = ReplaceWith("bundleOf(params)", "androidx.core.os.bundleOf"))
+@Deprecated(
+    message = "Use the Android KTX version",
+    replaceWith = ReplaceWith("bundleOf(params)", "androidx.core.os.bundleOf")
+)
 fun bundleOf(vararg params: Pair<String, Any?>): Bundle {
     val b = Bundle()
     for (p in params) {
@@ -121,7 +138,10 @@ fun bundleOf(vararg params: Pair<String, Any?>): Bundle {
                 @Suppress("UNCHECKED_CAST")
                 when {
                     v.isArrayOf<Parcelable>() -> b.putParcelableArray(k, v as Array<out Parcelable>)
-                    v.isArrayOf<CharSequence>() -> b.putCharSequenceArray(k, v as Array<out CharSequence>)
+                    v.isArrayOf<CharSequence>() -> b.putCharSequenceArray(
+                        k,
+                        v as Array<out CharSequence>
+                    )
                     v.isArrayOf<String>() -> b.putStringArray(k, v as Array<out String>)
                     else -> throw AnkoException("Unsupported bundle component (${v.javaClass})")
                 }

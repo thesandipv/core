@@ -111,11 +111,15 @@ open class AnkoContextImpl<T>(
         when (context) {
             is Activity -> context.setContentView(view)
             is ContextWrapper -> doAddView(context.baseContext, view)
-            else -> throw IllegalStateException("Context is not an Activity, can't set content view")
+            else -> throw IllegalStateException(
+                "Context is not an Activity, can't set content view"
+            )
         }
     }
 
-    protected open fun alreadyHasView(): Unit = throw IllegalStateException("View is already set: $myView")
+    protected open fun alreadyHasView(): Unit = throw IllegalStateException(
+        "View is already set: $myView"
+    )
 }
 
 inline fun Context.UI(setContentView: Boolean, init: AnkoContext<Context>.() -> Unit): AnkoContext<Context> =
@@ -125,7 +129,9 @@ inline fun Context.UI(init: AnkoContext<Context>.() -> Unit): AnkoContext<Contex
     createAnkoContext(this, init)
 
 @Suppress("DeprecatedCallableAddReplaceWith")
-@Deprecated(message = "Use support library fragments instead. Framework fragments were deprecated in API 28.")
+@Deprecated(
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+)
 inline fun Fragment.UI(init: AnkoContext<Fragment>.() -> Unit): AnkoContext<Fragment> =
     createAnkoContext(activity, init)
 
