@@ -22,9 +22,10 @@ jobs:
 
       - name: set up JDK
         id: setup-jdk
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v3
         with:
-          java-version: 11
+          distribution: 'zulu'
+          java-version: 17
 
       - name: Grant execute permission for gradlew
         id: grant-execute-permissions-for-gradle
@@ -32,7 +33,7 @@ jobs:
 
       - name: Build with Gradle
         id: build
-        uses: gradle/gradle-build-action@v2.7.0
+        uses: gradle/gradle-build-action@v2.8.0
         env:
           CI: true
           USERNAME: ${{ secrets.GHUSERNAME }}
