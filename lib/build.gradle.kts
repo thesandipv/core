@@ -57,7 +57,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.fragment:fragment-ktx:1.6.0")
-    implementation("androidx.preference:preference-ktx:1.2.0")
+    implementation("androidx.preference:preference-ktx:1.2.1")
     implementation("androidx.transition:transition:1.4.1")
     implementation("com.afollestad.material-dialogs:core:3.3.0")
     implementation("com.google.android.material:material:1.9.0")
