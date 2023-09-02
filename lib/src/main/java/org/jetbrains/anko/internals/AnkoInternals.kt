@@ -50,7 +50,7 @@ object AnkoInternals {
 
     private class AnkoContextThemeWrapper(base: Context?, val theme: Int) : ContextThemeWrapper(
         base,
-        theme
+        theme,
     )
 
     fun <T : View> addView(manager: ViewManager, view: T) = when (manager) {
@@ -96,7 +96,7 @@ object AnkoInternals {
     inline fun <T> T.createAnkoContext(
         ctx: Context,
         init: AnkoContext<T>.() -> Unit,
-        setContentView: Boolean = false
+        setContentView: Boolean = false,
     ): AnkoContext<T> {
         val dsl = AnkoContextImpl(ctx, this, setContentView)
         dsl.init()
@@ -117,7 +117,7 @@ object AnkoInternals {
     fun <T> createIntent(
         ctx: Context,
         clazz: Class<out T>,
-        params: Array<out Pair<String, Any?>>
+        params: Array<out Pair<String, Any?>>,
     ): Intent {
         val intent = Intent(ctx, clazz)
         if (params.isNotEmpty()) fillIntentArguments(intent, params)
@@ -128,7 +128,7 @@ object AnkoInternals {
     fun internalStartActivity(
         ctx: Context,
         activity: Class<out Activity>,
-        params: Array<out Pair<String, Any?>>
+        params: Array<out Pair<String, Any?>>,
     ) {
         ctx.startActivity(createIntent(ctx, activity, params))
     }
@@ -138,7 +138,7 @@ object AnkoInternals {
         act: Activity,
         activity: Class<out Activity>,
         requestCode: Int,
-        params: Array<out Pair<String, Any?>>
+        params: Array<out Pair<String, Any?>>,
     ) {
         act.startActivityForResult(createIntent(act, activity, params), requestCode)
     }
@@ -147,14 +147,14 @@ object AnkoInternals {
     fun internalStartService(
         ctx: Context,
         service: Class<out Service>,
-        params: Array<out Pair<String, Any?>>
+        params: Array<out Pair<String, Any?>>,
     ): ComponentName? = ctx.startService(createIntent(ctx, service, params))
 
     @JvmStatic
     fun internalStopService(
         ctx: Context,
         service: Class<out Service>,
-        params: Array<out Pair<String, Any?>>
+        params: Array<out Pair<String, Any?>>,
     ): Boolean = ctx.stopService(createIntent(ctx, service, params))
 
     @JvmStatic
@@ -179,7 +179,7 @@ object AnkoInternals {
                     value.isArrayOf<String>() -> intent.putExtra(it.first, value)
                     value.isArrayOf<Parcelable>() -> intent.putExtra(it.first, value)
                     else -> throw AnkoException(
-                        "Intent extra ${it.first} has wrong type ${value.javaClass.name}"
+                        "Intent extra ${it.first} has wrong type ${value.javaClass.name}",
                     )
                 }
 
@@ -191,7 +191,7 @@ object AnkoInternals {
                 is ShortArray -> intent.putExtra(it.first, value)
                 is BooleanArray -> intent.putExtra(it.first, value)
                 else -> throw AnkoException(
-                    "Intent extra ${it.first} has wrong type ${value.javaClass.name}"
+                    "Intent extra ${it.first} has wrong type ${value.javaClass.name}",
                 )
             }
             return@forEach
@@ -222,7 +222,7 @@ object AnkoInternals {
         fun getConstructor1() = viewClass.getConstructor(Context::class.java)
         fun getConstructor2() = viewClass.getConstructor(
             Context::class.java,
-            AttributeSet::class.java
+            AttributeSet::class.java,
         )
 
         try {
@@ -232,7 +232,7 @@ object AnkoInternals {
                 return getConstructor2().newInstance(ctx, null)
             } catch (e: NoSuchMethodException) {
                 throw AnkoException(
-                    "Can't initiate View of class ${viewClass.name}: can't find proper constructor"
+                    "Can't initiate View of class ${viewClass.name}: can't find proper constructor",
                 )
             }
         }
@@ -251,7 +251,7 @@ object AnkoInternals {
         uiMode: UiMode?,
         nightMode: Boolean?,
         rightToLeft: Boolean?,
-        smallestWidth: Int?
+        smallestWidth: Int?,
     ): Boolean {
         val config = ctx.resources?.configuration
 

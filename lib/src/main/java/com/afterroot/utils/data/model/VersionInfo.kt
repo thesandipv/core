@@ -28,7 +28,7 @@ data class VersionInfo(
     @SerializedName("latestVersion")
     val latestVersion: Int = 0,
     @SerializedName("disabledVersions")
-    val disabledVersions: List<Int> = emptyList()
+    val disabledVersions: List<Int> = emptyList(),
 ) {
     fun isDisabled() = disabledVersions.contains(currentVersion)
 }

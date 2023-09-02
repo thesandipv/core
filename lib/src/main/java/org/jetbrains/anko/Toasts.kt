@@ -35,7 +35,7 @@ inline fun AnkoContext<*>.toast(message: Int) = ctx.toast(message)
  * @param message the message text resource.
  */
 @Deprecated(
-    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28.",
 )
 inline fun Fragment.toast(message: Int) = activity.toast(message)
 
@@ -63,7 +63,7 @@ inline fun AnkoContext<*>.toast(message: CharSequence) = ctx.toast(message)
  * @param message the message text.
  */
 @Deprecated(
-    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28.",
 )
 inline fun Fragment.toast(message: CharSequence) = activity.toast(message)
 
@@ -91,7 +91,7 @@ inline fun AnkoContext<*>.longToast(message: Int) = ctx.longToast(message)
  * @param message the message text resource.
  */
 @Deprecated(
-    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28.",
 )
 inline fun Fragment.longToast(message: Int) = activity.longToast(message)
 
@@ -119,7 +119,7 @@ inline fun AnkoContext<*>.longToast(message: CharSequence) = ctx.longToast(messa
  * @param message the message text.
  */
 @Deprecated(
-    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28.",
 )
 inline fun Fragment.longToast(message: CharSequence) = activity.longToast(message)
 

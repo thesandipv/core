@@ -36,11 +36,11 @@ class ProcessPhoenix : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Process.killProcess(
-            intent.getIntExtra(KEY_MAIN_PROCESS_PID, -1)
+            intent.getIntExtra(KEY_MAIN_PROCESS_PID, -1),
         ) // Kill original main process
 
         @Suppress(
-            "DEPRECATION"
+            "DEPRECATION",
         ) val intents = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableArrayListExtra(KEY_RESTART_INTENTS, Intent::class.java)
         } else {
@@ -79,11 +79,11 @@ class ProcessPhoenix : Activity() {
             }
             // create a new task for the first activity.
             nextIntents[0].addFlags(
-                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK,
             )
             val intent = Intent(context, ProcessPhoenix::class.java)
             intent.addFlags(
-                Intent.FLAG_ACTIVITY_NEW_TASK
+                Intent.FLAG_ACTIVITY_NEW_TASK,
             ) // In case we are called with non-Activity context.
             intent.putParcelableArrayListExtra(KEY_RESTART_INTENTS, ArrayList(listOf(*nextIntents)))
             intent.putExtra(KEY_MAIN_PROCESS_PID, Process.myPid())
@@ -99,7 +99,7 @@ class ProcessPhoenix : Activity() {
             throw IllegalStateException(
                 "Unable to determine default activity for " +
                     packageName +
-                    ". Does an activity specify the DEFAULT category in its intent filter?"
+                    ". Does an activity specify the DEFAULT category in its intent filter?",
             )
         }
 

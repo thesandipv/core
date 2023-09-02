@@ -78,7 +78,7 @@ internal class DelegatingAnkoContext<T : ViewGroup>(override val owner: T) : Ank
 internal class ReusableAnkoContext<T>(
     override val ctx: Context,
     override val owner: T,
-    setContentView: Boolean
+    setContentView: Boolean,
 ) : AnkoContextImpl<T>(ctx, owner, setContentView) {
     override fun alreadyHasView() {}
 }
@@ -86,7 +86,7 @@ internal class ReusableAnkoContext<T>(
 open class AnkoContextImpl<T>(
     override val ctx: Context,
     override val owner: T,
-    private val setContentView: Boolean
+    private val setContentView: Boolean,
 ) : AnkoContext<T> {
     private var myView: View? = null
 
@@ -112,13 +112,13 @@ open class AnkoContextImpl<T>(
             is Activity -> context.setContentView(view)
             is ContextWrapper -> doAddView(context.baseContext, view)
             else -> throw IllegalStateException(
-                "Context is not an Activity, can't set content view"
+                "Context is not an Activity, can't set content view",
             )
         }
     }
 
     protected open fun alreadyHasView(): Unit = throw IllegalStateException(
-        "View is already set: $myView"
+        "View is already set: $myView",
     )
 }
 
@@ -130,7 +130,7 @@ inline fun Context.UI(init: AnkoContext<Context>.() -> Unit): AnkoContext<Contex
 
 @Suppress("DeprecatedCallableAddReplaceWith")
 @Deprecated(
-    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28.",
 )
 inline fun Fragment.UI(init: AnkoContext<Fragment>.() -> Unit): AnkoContext<Fragment> =
     createAnkoContext(activity, init)

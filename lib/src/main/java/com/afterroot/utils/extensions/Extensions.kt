@@ -62,7 +62,7 @@ import com.afterroot.utils.R
 fun View.visible(
     value: Boolean,
     transition: Transition? = Fade(if (value) Fade.MODE_IN else Fade.MODE_OUT),
-    viewGroup: ViewGroup? = parent as ViewGroup?
+    viewGroup: ViewGroup? = parent as ViewGroup?,
 ) {
     if (transition != null && viewGroup != null) {
         TransitionManager.beginDelayedTransition(viewGroup, transition)
@@ -85,7 +85,7 @@ fun Any.animateProperty(
     from: Float,
     to: Float,
     duration: Long = 400,
-    interpolator: Interpolator = AccelerateDecelerateInterpolator()
+    interpolator: Interpolator = AccelerateDecelerateInterpolator(),
 ) {
     ObjectAnimator.ofFloat(this, property, from, to).apply {
         this.interpolator = interpolator
@@ -107,7 +107,7 @@ fun DrawerArrowDrawable.progress(
     from: Float,
     to: Float,
     duration: Long = 400,
-    interpolator: Interpolator = AccelerateDecelerateInterpolator()
+    interpolator: Interpolator = AccelerateDecelerateInterpolator(),
 ) {
     animateProperty("progress", from, to, duration, interpolator)
 }

@@ -59,7 +59,7 @@ enum class ScreenSize {
     SMALL,
     NORMAL,
     LARGE,
-    XLARGE
+    XLARGE,
 }
 
 enum class UiMode {
@@ -68,13 +68,13 @@ enum class UiMode {
     DESK,
     TELEVISION,
     APPLIANCE,
-    WATCH
+    WATCH,
 }
 
 enum class Orientation {
     PORTRAIT,
     LANDSCAPE,
-    SQUARE
+    SQUARE,
 }
 
 /**
@@ -107,10 +107,10 @@ inline fun <T : Any> Context.configuration(
     nightMode: Boolean? = null,
     rightToLeft: Boolean? = null,
     smallestWidth: Int? = null,
-    f: () -> T
+    f: () -> T,
 ): T? = if (AnkoInternals.testConfiguration(
         this, screenSize, density, language, orientation, long,
-        fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth
+        fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth,
     )
 ) {
     f()
@@ -148,10 +148,10 @@ inline fun <T : Any> Activity.configuration(
     nightMode: Boolean? = null,
     rightToLeft: Boolean? = null,
     smallestWidth: Int? = null,
-    f: () -> T
+    f: () -> T,
 ): T? = if (AnkoInternals.testConfiguration(
         this, screenSize, density, language, orientation, long,
-        fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth
+        fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth,
     )
 ) {
     f()
@@ -189,10 +189,10 @@ inline fun <T : Any> AnkoContext<*>.configuration(
     nightMode: Boolean? = null,
     rightToLeft: Boolean? = null,
     smallestWidth: Int? = null,
-    f: () -> T
+    f: () -> T,
 ): T? = if (AnkoInternals.testConfiguration(
         ctx, screenSize, density, language, orientation, long,
-        fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth
+        fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth,
     )
 ) {
     f()
@@ -219,7 +219,7 @@ inline fun <T : Any> AnkoContext<*>.configuration(
  * @param smallestWidth the required smallest width of the screen.
  */
 @Deprecated(
-    message = "Use support library fragments instead. Framework fragments were deprecated in API 28."
+    message = "Use support library fragments instead. Framework fragments were deprecated in API 28.",
 )
 inline fun <T : Any> Fragment.configuration(
     screenSize: ScreenSize? = null,
@@ -233,13 +233,13 @@ inline fun <T : Any> Fragment.configuration(
     nightMode: Boolean? = null,
     rightToLeft: Boolean? = null,
     smallestWidth: Int? = null,
-    f: () -> T
+    f: () -> T,
 ): T? {
     val act = activity
     return if (act != null) {
         if (AnkoInternals.testConfiguration(
                 act, screenSize, density, language, orientation, long,
-                fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth
+                fromSdk, sdk, uiMode, nightMode, rightToLeft, smallestWidth,
             )
         ) {
             f()
@@ -285,7 +285,7 @@ inline fun doIfSdk(version: Int, f: () -> Unit) {
  */
 data class AttemptResult<out T> @PublishedApi internal constructor(
     val value: T?,
-    val error: Throwable?
+    val error: Throwable?,
 ) {
     inline fun <R> then(f: (T) -> R): AttemptResult<R> {
         if (isError) {

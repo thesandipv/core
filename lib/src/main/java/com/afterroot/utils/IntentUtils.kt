@@ -9,7 +9,7 @@ fun Intent.isResolvable(activity: Activity, flags: Long = 0): Boolean {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
         activity.packageManager.resolveActivity(
             this,
-            PackageManager.ResolveInfoFlags.of(flags)
+            PackageManager.ResolveInfoFlags.of(flags),
         ) != null
     } else {
         @Suppress("DEPRECATION")

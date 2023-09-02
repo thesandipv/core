@@ -23,7 +23,7 @@ import androidx.annotation.ChecksSdkIntAtLeast
 fun onVersionGreaterThanEqualTo(
     targetVersion: Int,
     trueFun: () -> Unit,
-    falseFun: (() -> Unit)? = null
+    falseFun: (() -> Unit)? = null,
 ) {
     if (Build.VERSION.SDK_INT >= targetVersion) {
         trueFun()
