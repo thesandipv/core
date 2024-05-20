@@ -61,7 +61,7 @@ dependencies {
     implementation("androidx.transition:transition:1.4.1")
     implementation("com.afollestad.material-dialogs:core:3.3.0")
     implementation("com.google.android.material:material:1.11.0")
-    implementation("com.google.code.gson:gson:2.10.1")
+    implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.jakewharton.timber:timber:5.0.1")
 }
 apply(from = "publish.gradle")
