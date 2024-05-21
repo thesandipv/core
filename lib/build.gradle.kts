@@ -20,7 +20,7 @@ plugins {
 }
 
 // Libs
-val kotlinVersion = "1.9.23"
+val kotlinVersion = "2.0.0"
 // Configs
 val major = 0
 val minor = 6
