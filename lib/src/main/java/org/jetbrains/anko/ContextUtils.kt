@@ -15,6 +15,7 @@
  */
 
 @file:Suppress("unused", "NOTHING_TO_INLINE", "DEPRECATION", "DeprecatedCallableAddReplaceWith")
+
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -92,9 +93,8 @@ inline fun <reified T : View> Activity.findOptional(@IdRes id: Int): T? = findVi
 @Deprecated(
     message = "Use support library fragments instead. Framework fragments were deprecated in API 28.",
 )
-inline fun <reified T : View> Fragment.findOptional(
-    @IdRes id: Int,
-): T? = view?.findViewById(id) as? T
+inline fun <reified T : View> Fragment.findOptional(@IdRes id: Int): T? =
+    view?.findViewById(id) as? T
 inline fun <reified T : View> Dialog.findOptional(@IdRes id: Int): T? = findViewById(id) as? T
 
 @Deprecated(

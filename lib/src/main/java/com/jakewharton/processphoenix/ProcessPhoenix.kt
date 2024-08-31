@@ -41,7 +41,8 @@ class ProcessPhoenix : Activity() {
 
         @Suppress(
             "DEPRECATION",
-        ) val intents = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        )
+        val intents = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             intent.getParcelableArrayListExtra(KEY_RESTART_INTENTS, Intent::class.java)
         } else {
             intent.getParcelableArrayListExtra(KEY_RESTART_INTENTS)
@@ -116,7 +117,9 @@ class ProcessPhoenix : Activity() {
             val runningProcesses = manager.runningAppProcesses
             if (runningProcesses != null) {
                 for (processInfo: RunningAppProcessInfo in runningProcesses) {
-                    if (processInfo.pid == currentPid && processInfo.processName.endsWith(":phoenix")) {
+                    if (processInfo.pid == currentPid &&
+                        processInfo.processName.endsWith(":phoenix")
+                    ) {
                         return true
                     }
                 }

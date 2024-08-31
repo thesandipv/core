@@ -62,10 +62,8 @@ class NetworkStateMonitor(private val cm: ConnectivityManager) : LiveData<Networ
         cm.registerNetworkCallback(networkRequest(), networkCallback)
     }
 
-    private fun networkRequest(): NetworkRequest {
-        return NetworkRequest.Builder()
-            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
-            .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-            .build()
-    }
+    private fun networkRequest(): NetworkRequest = NetworkRequest.Builder()
+        .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+        .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+        .build()
 }

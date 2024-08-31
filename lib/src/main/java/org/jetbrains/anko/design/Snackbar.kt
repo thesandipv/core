@@ -101,15 +101,11 @@ inline fun indefiniteSnackbar(view: View, message: CharSequence) = Snackbar
     "Use 'View.snackbar(Int, Int, (View) -> Unit)' instead.",
     ReplaceWith("view.snackbar(message, actionText, action)"),
 )
-inline fun snackbar(
-    view: View,
-    message: Int,
-    actionText: Int,
-    noinline action: (View) -> Unit,
-) = Snackbar
-    .make(view, message, Snackbar.LENGTH_SHORT)
-    .setAction(actionText, action)
-    .apply { show() }
+inline fun snackbar(view: View, message: Int, actionText: Int, noinline action: (View) -> Unit) =
+    Snackbar
+        .make(view, message, Snackbar.LENGTH_SHORT)
+        .setAction(actionText, action)
+        .apply { show() }
 
 /**
  * Display Snackbar with the [Snackbar.LENGTH_LONG] duration.
@@ -182,11 +178,10 @@ inline fun longSnackbar(
     message: CharSequence,
     actionText: CharSequence,
     noinline action: (View) -> Unit,
-) =
-    Snackbar
-        .make(view, message, Snackbar.LENGTH_LONG)
-        .setAction(actionText, action)
-        .apply { show() }
+) = Snackbar
+    .make(view, message, Snackbar.LENGTH_LONG)
+    .setAction(actionText, action)
+    .apply { show() }
 
 /**
  * Display Snackbar with the [Snackbar.LENGTH_INDEFINITE] duration.
@@ -202,11 +197,10 @@ inline fun indefiniteSnackbar(
     message: CharSequence,
     actionText: CharSequence,
     noinline action: (View) -> Unit,
-) =
-    Snackbar
-        .make(view, message, Snackbar.LENGTH_INDEFINITE)
-        .setAction(actionText, action)
-        .apply { show() }
+) = Snackbar
+    .make(view, message, Snackbar.LENGTH_INDEFINITE)
+    .setAction(actionText, action)
+    .apply { show() }
 
 /**
  * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
@@ -308,11 +302,10 @@ inline fun View.indefiniteSnackbar(
     @StringRes message: Int,
     @StringRes actionText: Int,
     noinline action: (View) -> Unit,
-) =
-    Snackbar
-        .make(this, message, Snackbar.LENGTH_INDEFINITE)
-        .setAction(actionText, action)
-        .apply { show() }
+) = Snackbar
+    .make(this, message, Snackbar.LENGTH_INDEFINITE)
+    .setAction(actionText, action)
+    .apply { show() }
 
 /**
  * Display the Snackbar with the [Snackbar.LENGTH_SHORT] duration.
@@ -354,8 +347,7 @@ inline fun View.indefiniteSnackbar(
     message: CharSequence,
     actionText: CharSequence,
     noinline action: (View) -> Unit,
-) =
-    Snackbar
-        .make(this, message, Snackbar.LENGTH_INDEFINITE)
-        .setAction(actionText, action)
-        .apply { show() }
+) = Snackbar
+    .make(this, message, Snackbar.LENGTH_INDEFINITE)
+    .setAction(actionText, action)
+    .apply { show() }

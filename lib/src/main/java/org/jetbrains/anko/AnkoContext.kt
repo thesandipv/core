@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-@file:Suppress("unused", "DEPRECATION")
+@file:Suppress("unused", "DEPRECATION", "ktlint:standard:function-naming")
+
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -35,13 +36,10 @@ interface AnkoContext<out T> : ViewManager {
     val owner: T
     val view: View
 
-    override fun updateViewLayout(view: View, params: ViewGroup.LayoutParams) {
+    override fun updateViewLayout(view: View, params: ViewGroup.LayoutParams): Unit =
         throw UnsupportedOperationException()
-    }
 
-    override fun removeView(view: View) {
-        throw UnsupportedOperationException()
-    }
+    override fun removeView(view: View): Unit = throw UnsupportedOperationException()
 
     companion object {
         fun create(ctx: Context, setContentView: Boolean = false): AnkoContext<Context> =
@@ -53,8 +51,11 @@ interface AnkoContext<out T> : ViewManager {
         fun <T> create(ctx: Context, owner: T, setContentView: Boolean = false): AnkoContext<T> =
             AnkoContextImpl(ctx, owner, setContentView)
 
-        fun <T> createReusable(ctx: Context, owner: T, setContentView: Boolean = false): AnkoContext<T> =
-            ReusableAnkoContext(ctx, owner, setContentView)
+        fun <T> createReusable(
+            ctx: Context,
+            owner: T,
+            setContentView: Boolean = false,
+        ): AnkoContext<T> = ReusableAnkoContext(ctx, owner, setContentView)
 
         fun <T : ViewGroup> createDelegate(owner: T): AnkoContext<T> = DelegatingAnkoContext(owner)
     }
@@ -122,8 +123,10 @@ open class AnkoContextImpl<T>(
     )
 }
 
-inline fun Context.UI(setContentView: Boolean, init: AnkoContext<Context>.() -> Unit): AnkoContext<Context> =
-    createAnkoContext(this, init, setContentView)
+inline fun Context.UI(
+    setContentView: Boolean,
+    init: AnkoContext<Context>.() -> Unit,
+): AnkoContext<Context> = createAnkoContext(this, init, setContentView)
 
 inline fun Context.UI(init: AnkoContext<Context>.() -> Unit): AnkoContext<Context> =
     createAnkoContext(this, init)

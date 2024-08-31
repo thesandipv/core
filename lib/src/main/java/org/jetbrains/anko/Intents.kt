@@ -15,6 +15,7 @@
  */
 
 @file:Suppress("NOTHING_TO_INLINE", "unused", "DEPRECATION", "DeprecatedCallableAddReplaceWith")
+
 package org.jetbrains.anko
 
 import android.app.Activity
@@ -39,8 +40,10 @@ inline fun <reified T : Activity> AnkoContext<*>.startActivity(vararg params: Pa
 inline fun <reified T : Activity> Fragment.startActivity(vararg params: Pair<String, Any?>) =
     AnkoInternals.internalStartActivity(activity, T::class.java, params)
 
-inline fun <reified T : Activity> Activity.startActivityForResult(requestCode: Int, vararg params: Pair<String, Any?>) =
-    AnkoInternals.internalStartActivityForResult(this, T::class.java, requestCode, params)
+inline fun <reified T : Activity> Activity.startActivityForResult(
+    requestCode: Int,
+    vararg params: Pair<String, Any?>,
+) = AnkoInternals.internalStartActivityForResult(this, T::class.java, requestCode, params)
 
 @Deprecated(
     message = "Use support library fragments instead. Framework fragments were deprecated in API 28.",
@@ -48,8 +51,7 @@ inline fun <reified T : Activity> Activity.startActivityForResult(requestCode: I
 inline fun <reified T : Activity> Fragment.startActivityForResult(
     requestCode: Int,
     vararg params: Pair<String, Any?>,
-) =
-    startActivityForResult(AnkoInternals.createIntent(act, T::class.java, params), requestCode)
+) = startActivityForResult(AnkoInternals.createIntent(act, T::class.java, params), requestCode)
 
 inline fun <reified T : Service> Context.startService(vararg params: Pair<String, Any?>) =
     AnkoInternals.internalStartService(this, T::class.java, params)
@@ -179,19 +181,17 @@ inline fun AnkoContext<*>.browse(url: String, newTask: Boolean = false) = ctx.br
 )
 inline fun Fragment.browse(url: String, newTask: Boolean = false) = activity.browse(url, newTask)
 
-fun Context.browse(url: String, newTask: Boolean = false): Boolean {
-    return try {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(url)
-        if (newTask) {
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-        startActivity(intent)
-        true
-    } catch (e: ActivityNotFoundException) {
-        e.printStackTrace()
-        false
+fun Context.browse(url: String, newTask: Boolean = false): Boolean = try {
+    val intent = Intent(Intent.ACTION_VIEW)
+    intent.data = Uri.parse(url)
+    if (newTask) {
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
+    startActivity(intent)
+    true
+} catch (e: ActivityNotFoundException) {
+    e.printStackTrace()
+    false
 }
 
 inline fun AnkoContext<*>.share(text: String, subject: String = "") = ctx.share(text, subject)
@@ -201,18 +201,16 @@ inline fun AnkoContext<*>.share(text: String, subject: String = "") = ctx.share(
 )
 inline fun Fragment.share(text: String, subject: String = "") = activity.share(text, subject)
 
-fun Context.share(text: String, subject: String = ""): Boolean {
-    return try {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "text/plain"
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject)
-        intent.putExtra(Intent.EXTRA_TEXT, text)
-        startActivity(Intent.createChooser(intent, null))
-        true
-    } catch (e: ActivityNotFoundException) {
-        e.printStackTrace()
-        false
-    }
+fun Context.share(text: String, subject: String = ""): Boolean = try {
+    val intent = Intent(Intent.ACTION_SEND)
+    intent.type = "text/plain"
+    intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+    intent.putExtra(Intent.EXTRA_TEXT, text)
+    startActivity(Intent.createChooser(intent, null))
+    true
+} catch (e: ActivityNotFoundException) {
+    e.printStackTrace()
+    false
 }
 
 inline fun AnkoContext<*>.email(email: String, subject: String = "", text: String = "") = ctx.email(
@@ -224,11 +222,8 @@ inline fun AnkoContext<*>.email(email: String, subject: String = "", text: Strin
 @Deprecated(
     message = "Use support library fragments instead. Framework fragments were deprecated in API 28.",
 )
-inline fun Fragment.email(
-    email: String,
-    subject: String = "",
-    text: String = "",
-) = activity.email(email, subject, text)
+inline fun Fragment.email(email: String, subject: String = "", text: String = "") =
+    activity.email(email, subject, text)
 
 fun Context.email(email: String, subject: String = "", text: String = ""): Boolean {
     val intent = Intent(Intent.ACTION_SENDTO)
@@ -254,15 +249,13 @@ inline fun AnkoContext<*>.makeCall(number: String): Boolean = ctx.makeCall(numbe
 )
 inline fun Fragment.makeCall(number: String): Boolean = activity.makeCall(number)
 
-fun Context.makeCall(number: String): Boolean {
-    return try {
-        val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$number"))
-        startActivity(intent)
-        true
-    } catch (e: Exception) {
-        e.printStackTrace()
-        false
-    }
+fun Context.makeCall(number: String): Boolean = try {
+    val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:$number"))
+    startActivity(intent)
+    true
+} catch (e: Exception) {
+    e.printStackTrace()
+    false
 }
 
 inline fun AnkoContext<*>.sendSMS(number: String, text: String = ""): Boolean = ctx.sendSMS(
@@ -273,19 +266,15 @@ inline fun AnkoContext<*>.sendSMS(number: String, text: String = ""): Boolean = 
 @Deprecated(
     message = "Use support library fragments instead. Framework fragments were deprecated in API 28.",
 )
-inline fun Fragment.sendSMS(
-    number: String,
-    text: String = "",
-): Boolean = activity.sendSMS(number, text)
+inline fun Fragment.sendSMS(number: String, text: String = ""): Boolean =
+    activity.sendSMS(number, text)
 
-fun Context.sendSMS(number: String, text: String = ""): Boolean {
-    return try {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse("sms:$number"))
-        intent.putExtra("sms_body", text)
-        startActivity(intent)
-        true
-    } catch (e: Exception) {
-        e.printStackTrace()
-        false
-    }
+fun Context.sendSMS(number: String, text: String = ""): Boolean = try {
+    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("sms:$number"))
+    intent.putExtra("sms_body", text)
+    startActivity(intent)
+    true
+} catch (e: Exception) {
+    e.printStackTrace()
+    false
 }

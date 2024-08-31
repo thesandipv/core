@@ -120,13 +120,11 @@ fun DrawerArrowDrawable.progress(
  * @author [Sandip Vaghela](http://github.com/thesandipv)
  * @return true if package installed otherwise false
  */
-fun Context.isAppInstalled(pName: String): Boolean {
-    return try {
-        this.packageManager.getApplicationInfo(pName, 0)
-        true
-    } catch (e: PackageManager.NameNotFoundException) {
-        false
-    }
+fun Context.isAppInstalled(pName: String): Boolean = try {
+    this.packageManager.getApplicationInfo(pName, 0)
+    true
+} catch (e: PackageManager.NameNotFoundException) {
+    false
 }
 
 /**
@@ -154,9 +152,7 @@ fun Context.isNetworkAvailable(): Boolean {
  * @author [Sandip Vaghela](http://github.com/thesandipv)
  * @return [SharedPreferences] instance
  */
-fun Context.getPrefs(): SharedPreferences {
-    return PreferenceManager.getDefaultSharedPreferences(this)
-}
+fun Context.getPrefs(): SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
 /**
  * Helper function for get drawable using Compat Method
@@ -205,9 +201,8 @@ fun Context.getTintedDrawable(@DrawableRes id: Int, @ColorInt tint: Int): Drawab
  * @since v0.1.0
  * @author [Sandip Vaghela](http://github.com/thesandipv)
  */
-fun getFileExt(fileName: String): String {
-    return fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length)
-}
+fun getFileExt(fileName: String): String =
+    fileName.substring(fileName.lastIndexOf(".") + 1, fileName.length)
 
 /**
  * @fileName fileName name of file

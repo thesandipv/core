@@ -21,14 +21,12 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorInt
 import com.google.android.material.color.MaterialColors
 
-fun Context.getMaterialColor(@AttrRes colorAttr: Int, errorMessageComponent: String = ""): Int {
-    return MaterialColors.getColor(this, colorAttr, errorMessageComponent)
-}
+fun Context.getMaterialColor(@AttrRes colorAttr: Int, errorMessageComponent: String = ""): Int =
+    MaterialColors.getColor(this, colorAttr, errorMessageComponent)
 
-fun View.getMaterialColor(@AttrRes colorAttr: Int, @ColorInt defaultValue: Int? = null): Int {
-    return if (defaultValue == null) {
+fun View.getMaterialColor(@AttrRes colorAttr: Int, @ColorInt defaultValue: Int? = null): Int =
+    if (defaultValue == null) {
         MaterialColors.getColor(this, colorAttr)
     } else {
         MaterialColors.getColor(this, colorAttr, defaultValue)
     }
-}

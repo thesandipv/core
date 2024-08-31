@@ -16,5 +16,7 @@
 package com.afterroot.utils.network
 
 enum class NetworkState {
-    CONNECTED, DISCONNECTED, CONNECTION_LOST
+    CONNECTED,
+    DISCONNECTED,
+    CONNECTION_LOST,
 }
