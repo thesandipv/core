@@ -16,7 +16,6 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("maven-publish")
 }
 
 // Libs
@@ -68,4 +67,3 @@ dependencies {
     implementation("com.google.code.gson:gson:2.11.0")
     implementation("com.jakewharton.timber:timber:5.0.1")
 }
-apply(from = "publish.gradle")
