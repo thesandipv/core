@@ -283,6 +283,7 @@ inline fun doIfSdk(version: Int, f: () -> Unit) {
  * @property value the return value if code execution was finished without an exception, null otherwise.
  * @property error a caught [Throwable] or null if nothing was caught.
  */
+@ConsistentCopyVisibility
 data class AttemptResult<out T> @PublishedApi internal constructor(
     val value: T?,
     val error: Throwable?,
