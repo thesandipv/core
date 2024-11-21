@@ -26,8 +26,6 @@ import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
-import android.os.Build
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,6 +48,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.customview.getCustomView
 import com.afterroot.utils.R
+import timber.log.Timber
 
 /**
  * Sets visibility of view with optional [transition]
@@ -133,17 +132,12 @@ fun Context.isAppInstalled(pName: String): Boolean = try {
  * @author [Sandip Vaghela](http://github.com/thesandipv)
  * @return true if connection available otherwise false
  */
-@Suppress("DEPRECATION")
 fun Context.isNetworkAvailable(): Boolean {
     val cm = getSystemService(this, ConnectivityManager::class.java)
 
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        val capabilities = cm?.getNetworkCapabilities(cm.activeNetwork) ?: return false
-        capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
-            capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
-    } else {
-        cm?.activeNetworkInfo?.isConnectedOrConnecting == true
-    }
+    val capabilities = cm?.getNetworkCapabilities(cm.activeNetwork) ?: return false
+    return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) &&
+        capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED)
 }
 
 /**
@@ -170,7 +164,7 @@ fun Context.getDrawableExt(@DrawableRes id: Int, @ColorRes tint: Int? = null): D
             DrawableCompat.setTint(drawable, ContextCompat.getColor(this, tint))
         }
     } catch (e: Exception) {
-        Log.e("Extensions", "getDrawableExt: ${e.stackTrace}")
+        Timber.tag("Extensions").e("getDrawableExt: ${e.stackTrace}")
     }
     return drawable
 }
@@ -189,7 +183,7 @@ fun Context.getTintedDrawable(@DrawableRes id: Int, @ColorInt tint: Int): Drawab
         drawable = ContextCompat.getDrawable(this, id)!!
         DrawableCompat.setTint(drawable, tint)
     } catch (e: Exception) {
-        Log.e("Extensions", "getDrawableExt: ${e.stackTrace}")
+        Timber.tag("Extensions").e("getDrawableExt: ${e.stackTrace}")
     }
     return drawable
 }
