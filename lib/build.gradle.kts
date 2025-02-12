@@ -44,7 +44,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("androidx.constraintlayout:constraintlayout:2.2.0")
     implementation("androidx.core:core-ktx:1.15.0")
-    implementation("androidx.fragment:fragment-ktx:1.8.5")
+    implementation("androidx.fragment:fragment-ktx:1.8.6")
     implementation("androidx.preference:preference-ktx:1.2.1")
     implementation("androidx.transition:transition:1.5.1")
     implementation("com.afollestad.material-dialogs:core:3.3.0")
